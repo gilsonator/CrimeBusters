@@ -1,13 +1,21 @@
 ﻿/*
 Downloaded from Wayback Machine Archive by David Gilson
 Archived on Mar 23, 2015 
-Upgraded Sep 6, 2024.
+Upgraded September 2024.
 */
 
+html,
 body {
-    font-family: Arial, Verdana, sans-serif;
-    margin: 0;
-    border: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Verdana, sans-serif;
+}
+
+#map {
+    height: 100%;
+    float: left;
+    width: 70%;
 }
 
 td {
@@ -22,12 +30,6 @@ h1 {
     font-size: 14pt;
 }
 
-#mapDiv {
-    width: 698px;
-    height: 320px;
-    float: left;
-    display: block;
-}
 
 .marker {
     font-size: 12px;
@@ -66,8 +68,7 @@ h1 {
 
 #crimeList {
     font-size: 10px;
-    float: left;
-    width: 260px;
+    width: 30%;
     height: 320px;
     overflow-y: scroll;
     margin: 0 0 0 4px;
