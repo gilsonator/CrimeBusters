@@ -10,12 +10,11 @@ NOTES:
 let map;
 const xmlPath = "xml/";
 const datesXMLFile = "dates.xml";
+let selectedDateString;
 
 async function initMap(date) {
     
-    //const markers = await loadMarkers(date.FileName);
-    //console.info (markers);
-    
+    // Location set to Townsville City
     const centerPosition = { lat: -19.285221, lng: 146.773911 };
     // Request needed libraries.
     //@ts-ignore
@@ -57,10 +56,18 @@ async function addMarker(pin) {
       title: pin.Address
     });
 
+    let propertyTakenList = "<ul>";
+    pin.PropertyTaken.split(";").forEach(item => {
+        propertyTakenList += "<li>" + item + "</li>";
+    });
+    propertyTakenList += "</ul>";
+
     let markerDiv = "<div class='marker'>";
-    markerDiv += "<h1>Details of the Alleged Crime</h1>"
-    markerDiv += "<p><b>" + pin.Type + "</b> occurred at a <b>" + pin.Location + "</b> located on <b>" + pin.Address + ".</b><br>"
-    markerDiv += "The perpetrators gained entry by <b>" + pin.Entry +"</b> and took <b>" + pin.PropertyTaken + " </b>from the premises.</p>"
+    markerDiv += "<h1>" + pin.Address + "</h1>";
+    markerDiv += "<p>An alleged <b>" + pin.Type + "</b> occurred at a <b>" + pin.Location + ".</b>";
+    markerDiv += "<br>The perpetrators gained entry by <b>" + pin.Entry +"</b>";
+    markerDiv += " and took: " + propertyTakenList + "</p>";
+    markerDiv += "Date Reported: <b>" + selectedDateString + "</b>";
     // const intro = "This is the details of the reported incident."
     // markerDiv += "<p>" + intro + "</p>";
     // markerDiv += "<table class='crime-table'>";
@@ -90,7 +97,8 @@ async function load() {
     map = await initMap();
     const dates = await loadDates();
     const markers = await loadMarkers(dates[0].FileName); // Load markers xml for first date
-    
+    selectedDateString = dates[0].DateString;
+
     markers.forEach(pin => {
         addMarker(pin); // Adding the first marker on first date
     });
