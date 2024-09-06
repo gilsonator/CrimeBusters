@@ -8,63 +8,170 @@ NOTES:
 // Written by David Gilson, Copyright NQN and David Gilson 2010
 
 let map;
-const datesXMLFile = "xml/dates.xml";
+const xmlPath = "xml/";
+const datesXMLFile = "dates.xml";
 
-async function initMap() {
-
-    const position = { lat: -19.285221, lng: 146.773911 };
+async function initMap(date) {
+    
+    //const markers = await loadMarkers(date.FileName);
+    //console.info (markers);
+    
+    const centerPosition = { lat: -19.285221, lng: 146.773911 };
     // Request needed libraries.
     //@ts-ignore
     const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
-  
-    map = new Map(document.getElementById("map"), {
-      zoom: 12,
-      center: position,
-      mapId: "CRIME_MAP_ID",
-    });
-  
-    // const iconImage = document.createElement("img");
-    // iconImage.src = "images/police_light.png";
-
-    const icon = document.createElement("div");
-    icon.innerHTML = '<i class="fa-solid fa-handcuffs fa-xl"></i>';
     
+    map = new Map(document.getElementById("map"), {
+        zoom: 12,
+        center: centerPosition,
+        mapId: "CRIME_MAP_ID",
+        
+    });
+    
+    return map;
+}
+
+let lastOpenedInfoWindow;
+
+async function addMarker(pin) {
+    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+    const { InfoWindow } = await google.maps.importLibrary("maps");
+
+    const icon = document.createElement("img");
+    icon.width = 24;
+    icon.height = 24;
+    icon.src = "images/siren.svg";
+
     const faPin = new PinElement({
       glyph: icon,
-      glyphColor: "white",
-      background: "blue",
-      borderColor: "darkblue"
+      background: "white",
+      borderColor: "blue",
+      scale: 1,
+
     });
 
-    // The marker, positioned at Townsville
     const marker = new AdvancedMarkerElement({
       map: map,
-      position: position,
-      content: faPin.element
+      position: new google.maps.LatLng (pin.Position),
+      content: faPin.element,
+      title: pin.Address
     });
+
+    let markerDiv = "<div class='marker'>";
+    markerDiv += "<h1>Details of the Alleged Crime</h1>"
+    markerDiv += "<p><b>" + pin.Type + "</b> occurred at a <b>" + pin.Location + "</b> located on <b>" + pin.Address + ".</b><br>"
+    markerDiv += "The perpetrators gained entry by <b>" + pin.Entry +"</b> and took <b>" + pin.PropertyTaken + " </b>from the premises.</p>"
+    // const intro = "This is the details of the reported incident."
+    // markerDiv += "<p>" + intro + "</p>";
+    // markerDiv += "<table class='crime-table'>";
+    // markerDiv += "<tr><th colspan=2><b>" + pin.Address + "</b></th>"
+    // markerDiv += "<tr><td>Crime:</td><td><b>" + pin.Type + "</b></td></tr>";
+    // markerDiv += "<tr><td>Location Type:</td><td><b>" + pin.Location + "</b></td></tr>";
+    // markerDiv += "<tr><td>Property Taken:</td><td><b>" + pin.PropertyTaken + "</b></td></tr>";
+    // markerDiv += "<tr><td>Entry Gained by:</td><td><b>" + pin.Entry + "</b></td></tr>";
+    // markerDiv += "</table></div>";
+
+    const infoWindow = new InfoWindow({
+        
+        content: markerDiv
+    });
+    
+    // Add a click event listener to the marker
+    marker.addListener("click", () => {
+        if (lastOpenedInfoWindow) { lastOpenedInfoWindow.close(); };
+        infoWindow.open(map, marker);
+        lastOpenedInfoWindow = infoWindow;
+    });
+
 }
 
 async function load() {
-  datesXML = await loadDates();
-  initMap();
 
-    // setupIcons();
-    // map = new GMap2(document.getElementById("mapDiv"));
-    // point = new GLatLng(-19.285221, 146.773911);
-    // map.setCenter(point, 12);
-    // var _0xca94x3 = new ExtLargeMapControl();
-    // map.addControl(_0xca94x3);
-    // map.enableScrollWheelZoom();
-    // mgr = new MarkerManager(map);
-    // loadDates();
+    map = await initMap();
+    const dates = await loadDates();
+    const markers = await loadMarkers(dates[0].FileName); // Load markers xml for first date
+    
+    markers.forEach(pin => {
+        addMarker(pin); // Adding the first marker on first date
+    });
 }
 
 async function loadDates() {
-    return [];
-    // GDownloadUrl(datesXMLFile, datesDownloadComplete);
+    try {
+        const response = await fetch(xmlPath + datesXMLFile);
+        const data = await response.text();
+        return parseDatesXML(data);
+    } catch (error) {
+        console.error('Error fetching the XML file:', error);
+        throw error;
+    }
+}
 
+function parseDatesXML(data) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(data, 'text/xml')
+    
+    const dateElements = xmlDoc.getElementsByTagName('date');
+    const dates = [];
 
+    for (let i = 0; i < dateElements.length; i++) {
+        const dateString = dateElements[i].getAttribute('DateString');
+        const fileName = dateElements[i].getAttribute('File');
+        const date = dateElements[i].getAttribute('Date');
+        dates.push({
+            DateString: dateString, 
+            FileName: fileName, 
+            Date: new Date(date)
+        });
+    }
+
+    console.log('DateStrings:', dates);
+    return dates;
+}
+
+async function loadMarkers(file) {
+    try {
+        const response = await fetch(xmlPath + file);
+        const data = await response.text();
+        return parseMarkersXML(data);
+    } catch (error) {
+        console.error('Error fetching the XML file:', error);
+        throw error;
+    }
+}
+
+function parseMarkersXML(data) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(data, 'text/xml')
+    
+    const markerElements = xmlDoc.getElementsByTagName('marker');
+    const markers = [];
+
+    // Sample:
+    // <marker address="BARRYMAN ST, PIMLICO" lat="-19.2733145" lng="146.7888844" 
+    // type="Steal from vehicle" location="Shopping area" propertyTaken="Phone" entry="Unknown"/>
+	
+    for (let i = 0; i < markerElements.length; i++) {
+        const lat = markerElements[i].getAttribute('lat');
+        const lng = markerElements[i].getAttribute('lng');
+        const address = markerElements[i].getAttribute('address');
+        const type = markerElements[i].getAttribute("type");
+        const propertyTaken = markerElements[i].getAttribute("propertyTaken");
+        const location = markerElements[i].getAttribute("location");
+        const entry = markerElements[i].getAttribute("entry");
+
+        markers.push({
+            Position: { lat: parseFloat(lat), lng: parseFloat(lng) }, 
+            Address: address,
+            PropertyTaken: propertyTaken,
+            Type: type,
+            Location: location,
+            Entry: entry,
+        });
+    }
+
+    console.log('Markers:', markers);
+    return markers;
 }
 
 var selectedDateID = null;
@@ -89,28 +196,9 @@ function datesDownloadComplete(xml) {
     loadMarkers(0);
 }
 
-var iconCrime = null;
-var CrimeMarkers = [];
 
-function setupIcons() {
-    iconCrime = new GIcon();
-    iconCrime.image = "images/police_light.png";
-    iconCrime.shadow = "images/police_light_shadow.png";
-    iconCrime.iconSize = new GSize(15, 20);
-    iconCrime.shadowSize = new GSize(24, 20);
-    iconCrime.iconAnchor = new GPoint(6, 20);
-    iconCrime.infoWindowAnchor = new GPoint(5, 1);
-}
 
-function loadMarkers(_0xca94x12) {
-    if (CrimeMarkers.length != 0) {
-        mgr.clearMarkers();
-        CrimeMarkers = [];
-        document.getElementById("pmimg_" + selectedDateID).src = "images/plus.gif";
-    }
-}
-
-function downloadComplete(xml) {
+function downloadComplete66(xml) {
   var eventsXML = GXml.parse(xml);
 
   try {
