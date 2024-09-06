@@ -1,18 +1,25 @@
-# Crime Busters Upgrade
-This is an upgrade of simple code I developed to show maps of  crimes reported to police.
+# Crime Busters Online Web Application Upgrade
+This is an upgrade of code I developed to show maps of crimes reported to police. This was used in local news paper website. 
 
-Worked with QPS to organise a download of reports and created  `.xml` files.
+> ***A first in Australia!***
+
+Worked with QPS to organise a download of reports and then created  `.xml` files based on date of report.
+
+Involved:
+* Upgrading to latest version of Google Maps API
+* Upgraded to use HTML5
+
 
 ## Notes
-I used multiple resources to find and download the HTML and related.
+I used multiple resources to find and download the HTML and related `.css`, `.js` and images.
 
 Ended up directly downloadeding the code, removing Wayback Machine code and links:
 
-https://web.archive.org/web/*/http://static.townsvillebulletin.com.au/crimebusters/*`
+<https://web.archive.org/web/*/http://static.townsvillebulletin.com.au/crimebusters/*`>
 
 Specific Date:
 
-https://web.archive.org/web/20111213050643if_/http://static.townsvillebulletin.com.au/crimebusters/#
+<https://web.archive.org/web/20111213050643if_/http://static.townsvillebulletin.com.au/crimebusters/#>
 
 ### I tried other ways:
 
