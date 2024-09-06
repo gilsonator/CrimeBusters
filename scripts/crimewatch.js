@@ -63,26 +63,16 @@ async function addMarker(pin) {
     propertyTakenList += "</ul>";
 
     let markerDiv = "<div class='marker'>";
-    markerDiv += "<h1>" + pin.Address + "</h1>";
     markerDiv += "<p>An alleged <b>" + pin.Type + "</b> occurred at a <b>" + pin.Location + ".</b>";
     markerDiv += "<br>The perpetrators gained entry by <b>" + pin.Entry +"</b>";
     markerDiv += " and took: " + propertyTakenList + "</p>";
-    markerDiv += "Date Reported: <b>" + selectedDateString + "</b>";
-    // const intro = "This is the details of the reported incident."
-    // markerDiv += "<p>" + intro + "</p>";
-    // markerDiv += "<table class='crime-table'>";
-    // markerDiv += "<tr><th colspan=2><b>" + pin.Address + "</b></th>"
-    // markerDiv += "<tr><td>Crime:</td><td><b>" + pin.Type + "</b></td></tr>";
-    // markerDiv += "<tr><td>Location Type:</td><td><b>" + pin.Location + "</b></td></tr>";
-    // markerDiv += "<tr><td>Property Taken:</td><td><b>" + pin.PropertyTaken + "</b></td></tr>";
-    // markerDiv += "<tr><td>Entry Gained by:</td><td><b>" + pin.Entry + "</b></td></tr>";
-    // markerDiv += "</table></div>";
+    markerDiv += "<p>Date Reported: <b>" + selectedDateString + "</b></p>";
 
     const infoWindow = new InfoWindow({
-        
-        content: markerDiv
+        content: markerDiv,
     });
-    
+    infoWindow.setHeaderContent(pin.Address);
+
     // Add a click event listener to the marker
     marker.addListener("click", () => {
         if (lastOpenedInfoWindow) { lastOpenedInfoWindow.close(); };
@@ -90,6 +80,10 @@ async function addMarker(pin) {
         lastOpenedInfoWindow = infoWindow;
     });
 
+    infoWindow.addListener("closeclick", () => {
+        lastOpenedInfoWindow = null;
+        console.log ("Closed");
+    });
 }
 
 async function load() {

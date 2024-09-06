@@ -18,13 +18,17 @@ body {
     width: 70%;
 }
 
-.marker h1 {
+.marker p:first-of-type {
     margin-top: 0px;
-    font-size: 18px;
+    font-size: 14px;
 }
 
-.marker p {
+/* DG: Bit of a hack */
+.gm-style-iw-ch
+{
+    font-weight: bold;
     font-size: 14px;
+    padding-top: 16px;
 }
 #crimeList {
     font-size: 10px;
