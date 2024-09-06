@@ -1,0 +1,149 @@
+﻿BODY {
+    font-family: Arial, Verdana;
+    margin: 0px;
+    border: 0;
+}
+
+TD {
+    font-size: 10pt
+}
+
+TH {
+    text-align: left;
+}
+
+H1 {
+    font-size: 14pt
+}
+
+#mapDiv 
+{
+    width: 698px; 
+    display: block; 
+    height: 320px;
+    float:left;
+}
+
+.marker
+{
+    font-size: 12px;
+}
+
+.marker .addressDIV
+{
+    color: #fff;
+    height: 33px;
+    font-size: 16px;
+     line-height: 33px;
+     
+     font-weight: bold ;
+     position: relative;
+     width: 360px;
+     margin-bottom : 10px;
+     overflow: hidden;
+}
+
+.marker .addressDIV .addressLabel 
+{
+    position: absolute; 
+    top:2px; 
+    left: 2px; 
+    color: #000;  
+    text-align: center; 
+    width: 100%;
+    
+}
+
+.marker .addressDIV .addressShadow
+{
+    position: absolute; 
+    text-align: center; 
+    width: 100%;
+} 
+
+.marker .markerBody
+{
+    margin-left:20px;
+}
+
+#crimeList 
+{
+    font-size: 10px;
+    float: left;
+    width: 260px;
+    height: 320px;
+    overflow-y: scroll ;
+    margin: 0 0 0 4px;
+}
+
+.crimeListDateHeading
+{
+    margin: 4px 4px 4px 0;
+    font-size: 12px;
+   
+    display: block;
+    line-height: 20px;
+    height: 20px;
+    background-color: #074396;
+    color: #fff;
+    padding: 0;
+       
+}
+
+.crimeListDateHeading A
+{
+    color: #FFF;
+    text-decoration: none;
+    display: block;   
+}
+
+.crimeListDateHeading A .pmimg
+{
+    border: 0;
+    margin: 4px 4px 0 4px;
+    
+}
+
+.crimeListDIV
+{
+    display: inline;
+}
+
+.listCrime
+{
+    margin-left: 12px;
+}
+
+A.listItem 
+{
+     margin-left: 8px;
+     text-decoration: none;    
+     color: #074396;
+}
+
+A.listItem:hover
+{
+     text-decoration: underline;    
+}
+
+
+/*
+     FILE ARCHIVED ON 20:02:28 Mar 17, 2012 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 02:48:34 Sep 06, 2024.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 0.429
+  exclusion.robots: 0.015
+  exclusion.robots.policy: 0.007
+  esindex: 0.008
+  cdx.remote: 12.276
+  LoadShardBlock: 103.05 (3)
+  PetaboxLoader3.datanode: 95.415 (4)
+  PetaboxLoader3.resolve: 114.612 (2)
+  load_resource: 166.125
+*/

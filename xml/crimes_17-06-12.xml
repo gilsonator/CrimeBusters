@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<markers>
+	<marker address="BENALLA RD, OAK VALLEY" lat="-19.4304460" lng="146.8187510" type="Break and Enter" location="Agriculture" propertyTaken="Ride on mower, fuel container" entry="Unlocked shed door"/>
+	<marker address="ANNANDALE DR, ANNANDALE" lat="-19.3176843" lng="146.7820059" type="Burglary" location="Dwelling" propertyTaken="Bicycle" entry="Open garage door"/>
+	<marker address="CAMPLIN CT, BURDELL" lat="-19.2472288" lng="146.6910023" type="Burglary" location="Dwelling" propertyTaken="Toolbox containing various tools, mag wheels, hose, sprinkler, pool equipment, flood light, trampoline, outdoor furniture" entry="Unlocked window"/>
+	<marker address="PUNARI ST, CURRAJONG" lat="-19.2748615" lng="146.7719759" type="Burglary" location="Unit" propertyTaken="Cash" entry="Unknown"/>
+	<marker address="CULLEN ST, DEERAGUN" lat="-19.2515560" lng="146.6687155" type="Burglary" location="Dwelling" propertyTaken="Bicycle" entry="Unknown"/>
+	<marker address="PETERSEN CT, DOUGLAS" lat="-19.3180990" lng="146.7599475" type="Burglary" location="Dwelling" propertyTaken="Credit card, handbag, identification, purse, cash, keycard, Iphone" entry="Unlocked door"/>
+	<marker address="REGATTA CRES, DOUGLAS" lat="-19.3167387" lng="146.7540170" type="Burglary" location="Dwelling" propertyTaken="DVD's, play station console and games, guitar, keys, vehicle" entry="Unknown"/>
+	<marker address="WATERDRAGON LINK, DOUGLAS" lat="-19.3259065" lng="146.7294607" type="Burglary" location="Dwelling" propertyTaken="Headphones, cash, identification, keycards, calculator, stationery, keys, cigarettes, wallet, video games, vehicle" entry="Unlocked door"/>
+	<marker address="CLARKE ST, GARBUTT" lat="-19.2620570" lng="146.7728067" type="Burglary" location="Unit" propertyTaken="Keys, vehicle, identification, tobacco, lighter" entry="Smashed louvers"/>
+	<marker address="EDGEWATER TCE, IDALIA" lat="-19.2975025" lng="146.8108105" type="Burglary" location="Dwelling" propertyTaken="Nil stolen" entry="Forced door"/>
+	<marker address="FLAME CT, KIRWAN" lat="-19.3071274" lng="146.7149707" type="Burglary" location="Dwelling" propertyTaken="Keys, vehicle" entry="Unlocked door"/>
+	<marker address="JULIA ST, KIRWAN" lat="-19.3107740" lng="146.7376305" type="Burglary" location="Dwelling" propertyTaken="Debit card, identification, wallet, keys" entry="House key used to enter dwelling"/>
+	<marker address="RIALTO CL, KIRWAN" lat="-19.3027605" lng="146.7243452" type="Burglary" location="Dwelling" propertyTaken="Keys, vehicle" entry="Unlocked door"/>
+	<marker address="SPRUCE ST, KIRWAN" lat="-19.3054131" lng="146.7181807" type="Burglary" location="Dwelling" propertyTaken="Cash, keycard, identification, keys, purse handbag, vehicle" entry="Unknown"/>
+	<marker address="THE STRAND , NORTH WARD" lat="-19.2550600" lng="146.8062331" type="Burglary" location="Dwelling" propertyTaken="Nil stolen" entry="Smashed louvers"/>
+	<marker address="UNIVERSITY RD, WULGURU" lat="-19.3196075" lng="146.8078400" type="Burglary" location="Boarding" propertyTaken="Credit cards, identification, cash, wallet, SIM card" entry="Unlocked door"/>
+	<marker address="HERVEY RANGE RD, BOHLE PLAINS" lat="-19.3241840" lng="146.6447149" type="Break and Enter" location="Business" propertyTaken="To be advised" entry="Jemmied door"/>
+	<marker address="CROCODILE CRES, MOUNT ST JOHN" lat="-19.2607290" lng="146.7288280" type="Break and Enter" location="Warehouse" propertyTaken="Television" entry="Smashed window"/>
+	<marker address="THE STRAND , NORTH WARD" lat="-19.2550600" lng="146.8062331" type="Break and Enter" location="Private grounds" propertyTaken="Gym equipment" entry="Forced sliding door"/>
+	<marker address="BOUNDARY ST, RAILWAY ESTATE" lat="-19.2733330" lng="146.8067261" type="Break and Enter" location="Secondary school" propertyTaken="Nil stolen" entry="Removed louvers"/>
+	<marker address="FLINDERS ST, TOWNSVILLE CITY" lat="-19.2689120" lng="146.8061073" type="Break and Enter" location="Club" propertyTaken="Nil stolen" entry="Smashed window"/>
+	<marker address="FULHAM RD, VINCENT" lat="-19.2898250" lng="146.7612143" type="Break and Enter" location="Education" propertyTaken="Nil stolen" entry="Smashed louvers"/>
+	<marker address="MOUNT KULBURN DR, JENSEN" lat="-19.2371630" lng="146.6337390" type="Break and Enter" location="Shop" propertyTaken="Cash, generator, welding equipment" entry="Unknown"/>
+	<marker address="MCCULLOUGH CT, ANNANDALE" lat="-19.3172565" lng="146.8033020" type="Steal motor vehicle" location="Private grounds" propertyTaken="Moped, helmet, keys" entry="Stolen by a visitor to the residence"/>
+	<marker address="RAILWAY AVE, RAILWAY ESTATE" lat="-19.2838330" lng="146.8141790" type="Steal motor vehicle" location="Street" propertyTaken="Vehicle" entry="Smashed window"/>
+	<marker address="INGHAM RD, BOHLE" lat="-19.2651790" lng="146.7050720" type="Steal from vehicle" location="Private grounds" propertyTaken="Vehicle accessories, car stereo" entry="Unlocked door"/>
+	<marker address="PARKSIDE DR, CONDON" lat="-19.3231765" lng="146.7161700" type="Steal motor vehicle" location="Private grounds" propertyTaken="Keys, vehicle" entry="Unlocked door"/>
+	<marker address="CLAYTON ST, HERMIT PARK" lat="-19.2848127" lng="146.7981660" type="Steal from vehicle" location="Private grounds" propertyTaken="Iphone, handbag, wallet" entry="Unlocked door"/>
+	<marker address="RICHMOND ST, HERMIT PARK" lat="-19.2842221" lng="146.8003470" type="Steal from vehicle" location="Street" propertyTaken="Keys" entry="Unlocked door"/>
+	<marker address="ROSS RIVER RD, KIRWAN" lat="-19.3171713" lng="146.7286506" type="Steal from vehicle" location="Education" propertyTaken="Nil stolen" entry="Smashed window"/>
+	<marker address="MEARS ST, MYSTERTON" lat="-19.2888460" lng="146.7937515" type="Steal from vehicle" location="Street" propertyTaken="Keys, cosmetics, cigarette lighter, quantity of discs and CD's" entry="Unlocked door"/>
+	<marker address="BROOKHOUSE , STUART" lat="-19.3466635" lng="146.8270404" type="Steal from vehicle" location="Private grounds" propertyTaken="Generator, plant equipment tools" entry="Cut fence where vehicles are stored"/>
+	<marker address="FLINDERS ST, TOWNSVILLE CITY" lat="-19.2689120" lng="146.8061073" type="Steal from vehicle" location="Street" propertyTaken="Nil stolen" entry="Smashed window"/>
+	<marker address="STANLEY ST, TOWNSVILLE CITY" lat="-19.2634895" lng="146.8106105" type="Steal from vehicle" location="Street" propertyTaken="Nil stolen" entry="Unknown"/>
+</markers>

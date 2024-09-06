@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<markers>
+	<marker address="JENKINS ST, KIRWAN" lat="-19.3156040" lng="146.7290707" type="Break and Enter" location="Dwelling" propertyTaken="Jewellery" entry="Force window"/>
+	<marker address="HODGES CRES, VINCENT" lat="-19.2864015" lng="146.7642420" type="Break and Enter" location="Dwelling" propertyTaken="Nil" entry="Cut flyscreen"/>
+	<marker address="BOOKARA GUM CRES, MOUNT LOW" lat="-19.2309988" lng="146.6547118" type="Break and Enter" location="Dwelling" propertyTaken="Nil" entry="Force door"/>
+	<marker address="SHEERWATER PDE, DOUGLAS" lat="-19.3261844" lng="146.7294897" type="Break and Enter" location="Dwelling" propertyTaken="Nil" entry="Cut flyscreen"/>
+	<marker address="MOFFAT ST, KIRWAN" lat="-19.3028410" lng="146.7302300" type="Break and Enter" location="Dwelling" propertyTaken="Jewellery" entry="Unlocked door"/>
+	<marker address="LATCHFORD ST, PIMLICO" lat="-19.2815643" lng="146.7876565" type="Break and Enter" location="Dwelling" propertyTaken="Computer console" entry="Unknown"/>
+	<marker address="SHEERWATER PDE, DOUGLAS" lat="-19.3261844" lng="146.7294897" type="Burglary" location="Dwelling" propertyTaken="Nil" entry="Unknown"/>
+	<marker address="ALEXANDER CT, RASMUSSEN" lat="-19.3645475" lng="146.7259700" type="Steal from vehicle" location="Private grounds" propertyTaken="Nil" entry="Unsecured"/>
+	<marker address="BLAISE CT, MOUNT LOUISA" lat="-19.2931087" lng="146.7105513" type="Steal from vehicle" location="Private grounds" propertyTaken="Spotlights" entry="Use tool"/>
+	<marker address="THURINGOWA DR, KIRWAN" lat="-19.3171713" lng="146.7286506" type="Break and Enter" location="Unit" propertyTaken="Nil" entry="Unknown"/>
+	<marker address="CHAMPAGNE CRES, KELSO" lat="-19.3840438" lng="146.7312830" type="Break and Enter" location="Dwelling" propertyTaken="Vehicle; Phone; Computer tablets" entry="Unlocked door; use keys"/>
+	<marker address="BARRYMAN ST, PIMLICO" lat="-19.2733145" lng="146.7888844" type="Steal from vehicle" location="Shopping area" propertyTaken="Phone" entry="Unknown"/>
+	<marker address="WOOLCOCK ST, CURRAJONG" lat="-19.2719214" lng="146.7754281" type="Steal from vehicle" location="Street" propertyTaken="Cash" entry="Smash window"/>
+	<marker address="MITCHELL ST, NORTH WARD" lat="-19.2548382" lng="146.8040735" type="Steal from vehicle" location="Street" propertyTaken="Retractable Awning" entry="Use tool"/>
+	<marker address="CHARTERS TOWERS RD, MYSTERTON" lat="-19.2906705" lng="146.7945186" type="Break and Enter" location="Restaurant" propertyTaken="Tools" entry="Attacked door"/>
+	<marker address="ALBANY RD, HYDE PARK" lat="-19.2762160" lng="146.7922977" type="Break and Enter" location="Dwelling" propertyTaken="Vehicle; Laptop; Cash" entry="Attacked door"/>
+	<marker address="ALBANY RD, HYDE PARK" lat="-19.2762160" lng="146.7922977" type="Break and Enter" location="Dwelling" propertyTaken="Nil" entry="Attacked door"/>
+	<marker address="GRANT AVE, AITKENVALE" lat="-19.3044541" lng="146.7735955" type="Steal from vehicle" location="Private grounds" propertyTaken="Cash" entry="Unsecured"/>
+	<marker address="ARMSTRONG ST, HERMIT PARK" lat="-19.2797214" lng="146.8006210" type="Break and Enter" location="Dwelling" propertyTaken="Laptops; Jewellery" entry="Force window"/>
+	<marker address="RIVERWAY DR, RASMUSSEN" lat="-19.3657864" lng="146.7276340" type="Break and Enter" location="Medical" propertyTaken="Laptop" entry="Smash window"/>
+	<marker address="SIR LESLIE THIESS DR, TOWNSVILLE CITY" lat="-19.2568164" lng="146.8235810" type="Steal from vehicle" location="Carpark" propertyTaken="Retractable Awning" entry="Use tool"/>
+</markers>
