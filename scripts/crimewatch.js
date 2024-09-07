@@ -18,6 +18,20 @@ function formatString(str) {
     });
 }
 
+async function load() {
+
+    map = await initMap();
+    const dates = await loadDates();
+    const markers = await loadMarkers(dates[0].FileName); // Load markers xml for first date
+    selectedDateString = dates[0].DateString;
+
+    markers.forEach(pin => {
+        addMarker(pin); // Adding the first marker on first date
+    });
+}
+
+let currentCircle;
+
 async function initMap(date) {
     
     // Location set to Townsville City
@@ -30,9 +44,17 @@ async function initMap(date) {
         zoom: 12,
         center: centerPosition,
         mapId: "CRIME_MAP_ID",
-        
     });
-    
+
+    currentCircle = new google.maps.Circle({
+        strokeColor: "#0000FF",
+        strokeOpacity: 0.8,
+        strokeWeight: 1,
+        fillColor: "#0000FF",
+        fillOpacity: 0.25,
+        radius: 300,
+      });
+
     return map;
 }
 
@@ -61,19 +83,6 @@ async function addMarker(pin) {
       title: pin.Address
     });
 
-    const circle = new google.maps.Circle({
-        strokeColor: "#0000FF",
-        strokeOpacity: 0.8,
-        strokeWeight: 1,
-        fillColor: "#0000FF",
-        fillOpacity: 0.25,
-        map,
-        center: pin.Position,
-        radius: 200
-      });
-    
-    //circle.bindTo('center', marker, 'position');
-
     let propertyTakenList = "<ul>";
     pin.PropertyTaken.split(";").forEach(item => {
         propertyTakenList += "<li>" + item + "</li>";
@@ -92,29 +101,21 @@ async function addMarker(pin) {
     });
 
     infoWindow.setHeaderContent(formatString (pin.Address));
-
+    
     // Add a click event listener to the marker
     marker.addListener("click", () => {
         if (lastOpenedInfoWindow) { lastOpenedInfoWindow.close(); };
+        if (currentCircle) { currentCircle.setMap(null); };
         infoWindow.open(map, marker);
         lastOpenedInfoWindow = infoWindow;
+
+        currentCircle.setMap (map);
+        currentCircle.setCenter (pin.Position);
     });
 
     infoWindow.addListener("closeclick", () => {
         lastOpenedInfoWindow = null;
-        console.log ("Closed");
-    });
-}
-
-async function load() {
-
-    map = await initMap();
-    const dates = await loadDates();
-    const markers = await loadMarkers(dates[0].FileName); // Load markers xml for first date
-    selectedDateString = dates[0].DateString;
-
-    markers.forEach(pin => {
-        addMarker(pin); // Adding the first marker on first date
+        currentCircle.setMap(null);
     });
 }
 
@@ -205,6 +206,9 @@ function parseMarkersXML(data) {
     return markers;
 }
 
+
+
+///// OLD CODE: ////////////////////////
 var selectedDateID = null;
 var crimeFiles = [];
 
@@ -227,8 +231,6 @@ function datesDownloadComplete(xml) {
     loadMarkers(0);
 }
 
-
-///// OLD CODE: ////////////////////////
 function downloadComplete66(xml) {
   var eventsXML = GXml.parse(xml);
 
