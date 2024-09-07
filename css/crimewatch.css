@@ -23,17 +23,21 @@ body {
     font-size: 14px;
 }
 
+ul {
+    padding-inline-start: 30px;
+}
+
 /* DG: Bit of a hack */
 .gm-style-iw-ch
 {
     font-weight: bold;
-    font-size: 14px;
-    padding-top: 16px;
+    font-size: 20px;
+    padding-top: 12px;
 }
 #crimeList {
     font-size: 10px;
     width: 30%;
-    height: 320px;
+    height: 100%;
     overflow-y: scroll;
     margin: 0 0 0 4px;
 }
