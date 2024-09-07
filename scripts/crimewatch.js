@@ -7,10 +7,15 @@ NOTES:
 
 // Written by David Gilson, Copyright NQN and David Gilson 2010
 
+// The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred. 
+// This data records property crime reported over periods beginning 12.01pm Monday, Wednesday or Friday until 12 noon on the listed date.
+
 let map;
 const xmlPath = "xml/";
 const datesXMLFile = "dates.xml";
-let selectedDateString;
+let eventDates;
+let selectedDateID;
+let currentMarkers;
 
 function formatString(str) {
     return str.toLowerCase().replace(/\b\w/g, function(char) {
@@ -21,12 +26,12 @@ function formatString(str) {
 async function load() {
 
     map = await initMap();
-    const dates = await loadDates();
-    const markers = await loadMarkers(dates[0].FileName); // Load markers xml for first date
-    selectedDateString = dates[0].DateString;
+    eventDates = await loadParseDatesXML();
+    currentMarkers = await loadMarkers(eventDates[0].FileName); // Load markers xml for first date
+    selectedDateID = 0;
 
-    markers.forEach(pin => {
-        addMarker(pin); // Adding the first marker on first date
+    currentMarkers.forEach(pin => {
+        addMarker(pin); // Adding the first markers on first date
     });
 }
 
@@ -85,16 +90,20 @@ async function addMarker(pin) {
 
     let propertyTakenList = "<ul>";
     pin.PropertyTaken.split(";").forEach(item => {
-        propertyTakenList += "<li>" + item + "</li>";
+        propertyTakenList += "<li><b>" + item + "</b></li>";
     });
     propertyTakenList += "</ul>";
 
     let markerDiv = "<div class='marker'>";
-    markerDiv += "<p>An alleged <b>" + pin.Type + "</b> occurred at a <b>" + pin.Location + ".</b>";
+    markerDiv += "<p>An alleged <b>" + pin.Type + "</b> event occurred at a <b>" + pin.Location + ".</b>";
     markerDiv += "<br>The perpetrators gained entry by <b>" + pin.Entry +"</b>";
-    markerDiv += " and took: " + propertyTakenList + "</p>";
-    markerDiv += "<p>Date Reported: <b>" + selectedDateString + "</b></p>";
-    // markerDiv += "https://maps.google.com/maps?ll=" + pin.Position.lat + "," + pin.Position.lng 
+    markerDiv += " and removed: " + propertyTakenList + "</p>";
+    markerDiv += "<p>Date Reported: <b>" + eventDates[selectedDateID].DateString + "</b></p>";
+    
+    // gMapUrl = 'https://www.google.com/maps/search/?api=1&query=' + pin.Position.lat + ',' + pin.Position.lng;
+    gMapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURI (pin.Address + ',QLD, Australia');
+
+    markerDiv += '<a target="_blank" href="' + gMapUrl + '" tabindex="0"> <span>View on Google Maps</span> </a>'
     
     const infoWindow = new InfoWindow({
         content: markerDiv,
@@ -111,6 +120,7 @@ async function addMarker(pin) {
 
         currentCircle.setMap (map);
         currentCircle.setCenter (pin.Position);
+        map.setCenter (pin.Position)
     });
 
     infoWindow.addListener("closeclick", () => {
@@ -119,7 +129,7 @@ async function addMarker(pin) {
     });
 }
 
-async function loadDates() {
+async function loadParseDatesXML() {
     try {
         const response = await fetch(xmlPath + datesXMLFile);
         const data = await response.text();
@@ -209,7 +219,7 @@ function parseMarkersXML(data) {
 
 
 ///// OLD CODE: ////////////////////////
-var selectedDateID = null;
+
 var crimeFiles = [];
 
 function datesDownloadComplete(xml) {
