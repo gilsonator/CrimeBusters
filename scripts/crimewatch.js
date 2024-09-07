@@ -12,6 +12,12 @@ const xmlPath = "xml/";
 const datesXMLFile = "dates.xml";
 let selectedDateString;
 
+function formatString(str) {
+    return str.toLowerCase().replace(/\b\w/g, function(char) {
+        return char.toUpperCase();
+    });
+}
+
 async function initMap(date) {
     
     // Location set to Townsville City
@@ -46,15 +52,27 @@ async function addMarker(pin) {
       background: "white",
       borderColor: "blue",
       scale: 1,
-
     });
 
     const marker = new AdvancedMarkerElement({
       map: map,
-      position: new google.maps.LatLng (pin.Position),
+      position: pin.Position,
       content: faPin.element,
       title: pin.Address
     });
+
+    const circle = new google.maps.Circle({
+        strokeColor: "#0000FF",
+        strokeOpacity: 0.8,
+        strokeWeight: 1,
+        fillColor: "#0000FF",
+        fillOpacity: 0.25,
+        map,
+        center: pin.Position,
+        radius: 200
+      });
+    
+    //circle.bindTo('center', marker, 'position');
 
     let propertyTakenList = "<ul>";
     pin.PropertyTaken.split(";").forEach(item => {
@@ -67,11 +85,13 @@ async function addMarker(pin) {
     markerDiv += "<br>The perpetrators gained entry by <b>" + pin.Entry +"</b>";
     markerDiv += " and took: " + propertyTakenList + "</p>";
     markerDiv += "<p>Date Reported: <b>" + selectedDateString + "</b></p>";
-
+    // markerDiv += "https://maps.google.com/maps?ll=" + pin.Position.lat + "," + pin.Position.lng 
+    
     const infoWindow = new InfoWindow({
         content: markerDiv,
     });
-    infoWindow.setHeaderContent(pin.Address);
+
+    infoWindow.setHeaderContent(formatString (pin.Address));
 
     // Add a click event listener to the marker
     marker.addListener("click", () => {
@@ -152,7 +172,7 @@ function parseMarkersXML(data) {
     // Sample:
     // <marker address="BARRYMAN ST, PIMLICO" lat="-19.2733145" lng="146.7888844" 
     // type="Steal from vehicle" location="Shopping area" propertyTaken="Phone" entry="Unknown"/>
-	
+	// -19.2542771,146.823100
     for (let i = 0; i < markerElements.length; i++) {
         const lat = markerElements[i].getAttribute('lat');
         const lng = markerElements[i].getAttribute('lng');
@@ -162,8 +182,17 @@ function parseMarkersXML(data) {
         const location = markerElements[i].getAttribute("location");
         const entry = markerElements[i].getAttribute("entry");
 
+        // DG NOTE: There was incorrect attributes for lat, lng in XML:
+        // For Example:
+        //   'Sir Leslie Thiess Dr, Townsville City'
+        //   GMaps Correct: -19.2543634, 146.8255609
+        //   in XML:        -19.2568164, 146.8235810
+        //   differences:     0.002453,    0.0019799
+        //  Calculated Difference using Math.abs(correct, xml) and applied to property, works for most.
+        //      Position: { lat: parseFloat(lat) + 0.002453, lng: parseFloat(lng) + 0.0019799 }, 
+            
         markers.push({
-            Position: { lat: parseFloat(lat), lng: parseFloat(lng) }, 
+            Position: { lat: parseFloat(lat) + 0.002453, lng: parseFloat(lng) + 0.0019799 }, 
             Address: address,
             PropertyTaken: propertyTaken,
             Type: type,
@@ -199,7 +228,7 @@ function datesDownloadComplete(xml) {
 }
 
 
-
+///// OLD CODE: ////////////////////////
 function downloadComplete66(xml) {
   var eventsXML = GXml.parse(xml);
 
