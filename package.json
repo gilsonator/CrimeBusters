@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/gilsonator/CrimeBusters/issues"
   },
-  "homepage": "https://github.com/gilsonator/CrimeBusters#readme"
+  "homepage": "https://github.com/gilsonator/CrimeBusters#readme",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
 }
