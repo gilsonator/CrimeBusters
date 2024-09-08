@@ -16,7 +16,7 @@ import { XMLParser } from './XMLParser.js';
 let map;
 let eventDates;
 let selectedDateID;
-let currentMarkers;
+let currentMarkers = [];
 let lastOpenedInfoWindow;
 let currentCircle;
 
@@ -80,7 +80,7 @@ async function initMap(date) {
     return map;
 }
 
-async function addMarker(pin) {
+async function addMarker(eventDetails) {
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
     const { InfoWindow } = await google.maps.importLibrary("maps");
 
@@ -96,25 +96,25 @@ async function addMarker(pin) {
       scale: 1,
     });
 
-    const marker = new AdvancedMarkerElement({
+    const marker = await new AdvancedMarkerElement({
       map: map,
-      position: pin.Position,
+      position: eventDetails.Position,
       content: faPin.element,
-      title: pin.Address
+      title: eventDetails.Address
     });
 
     let propertyTakenList = `
   <ul>
-    ${pin.PropertyTaken.split(";").map(item => `<li><b>${item}</b></li>`).join('')}
+    ${eventDetails.PropertyTaken.split(";").map(item => `<li><b>${item}</b></li>`).join('')}
   </ul>
 `;
 
     const markerDiv = `
   <div class='marker'>
-    <p>An alleged <b>${pin.Type}</b> event occurred at a <b>${pin.Location}</b>.</p>
-    <p>The perpetrators gained entry by <b>${pin.Entry}</b> and stole: ${propertyTakenList}</p>
+    <p>An alleged <b>${eventDetails.Type}</b> event occurred at a <b>${eventDetails.Location}</b>.</p>
+    <p>The perpetrators gained entry by <b>${eventDetails.Entry}</b> and stole: ${propertyTakenList}</p>
     <p>Date Reported: <b>${eventDates[selectedDateID].DateString}</b></p>
-    <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(pin.Address + ',QLD,Australia')}" tabindex="0">
+    <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(eventDetails.Address + ',QLD,Australia')}" tabindex="0">
       <span>View on Google Maps</span>
     </a>
     <p class="marker-note"><b>NOTE:</b> The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred.</p>
@@ -124,7 +124,7 @@ async function addMarker(pin) {
         content: markerDiv,
     });
 
-    infoWindow.setHeaderContent(formatString (pin.Address));
+    infoWindow.setHeaderContent(formatString (eventDetails.Address));
     
     // Add a click event listener to the marker
     marker.addListener("click", () => {
@@ -134,18 +134,29 @@ async function addMarker(pin) {
         lastOpenedInfoWindow = infoWindow;
 
         currentCircle.setMap (map);
-        map.panTo (pin.Position)
-        currentCircle.setCenter (pin.Position);
+        map.panTo (eventDetails.Position)
+        currentCircle.setCenter (eventDetails.Position);
     });
 
     infoWindow.addListener("closeclick", () => {
         lastOpenedInfoWindow = null;
         currentCircle.setMap(null);
     });
+
+    currentMarkers.push (marker);
 }
+
+export function removeMarkers() {
+    for (let marker of currentMarkers) {
+        marker.setMap(null);
+    }
+    currentMarkers = [];
+    currentCircle.setMap(null);
+  }
 
 // Attach the load function to the window object
 window.onload = load;
+window.removeMarkers = removeMarkers;
 
 ///// OLD CODE: ////////////////////////
 /*
