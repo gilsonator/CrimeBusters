@@ -112,12 +112,12 @@ async function addMarker(pin) {
     const markerDiv = `
   <div class='marker'>
     <p>An alleged <b>${pin.Type}</b> event occurred at a <b>${pin.Location}</b>.</p>
-    <p>The perpetrators gained entry by <b>${pin.Entry}</b> and removed: ${propertyTakenList}</p>
+    <p>The perpetrators gained entry by <b>${pin.Entry}</b> and stole: ${propertyTakenList}</p>
     <p>Date Reported: <b>${eventDates[selectedDateID].DateString}</b></p>
     <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(pin.Address + ',QLD,Australia')}" tabindex="0">
       <span>View on Google Maps</span>
     </a>
-    <p class="marker-note">NOTE: The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred.</p>
+    <p class="marker-note"><b>NOTE:</b> The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred.</p>
   </div>
 `;    
     const infoWindow = new InfoWindow({
@@ -134,8 +134,8 @@ async function addMarker(pin) {
         lastOpenedInfoWindow = infoWindow;
 
         currentCircle.setMap (map);
-        currentCircle.setCenter (pin.Position);
         map.panTo (pin.Position)
+        currentCircle.setCenter (pin.Position);
     });
 
     infoWindow.addListener("closeclick", () => {
