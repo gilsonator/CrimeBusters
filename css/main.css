@@ -19,7 +19,7 @@ body {
 }
 
 .marker p:first-of-type {
-    margin-top: 0px;
+    margin-top: 10px;
     font-size: 14px;
 }
 
@@ -38,7 +38,19 @@ ul {
     font-weight: bold;
     font-size: 20px;
     padding-top: 12px;
+    padding-left: 10px;
+    text-shadow: 2px 4px 10px rgba(0, 0, 0, 10);
 }
+
+.gm-style-iw-chr {
+    margin-left: -12px; 
+    margin-right: -12px;
+    background-color:#002148;
+    background-image: url(../../images/police_banner.jpg);
+    background-repeat: repeat-x; /* or repeat, repeat-x, repeat-y */;
+    color: white;
+}
+
 #crimeList {
     font-size: 10px;
     width: 100%;
