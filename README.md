@@ -32,11 +32,10 @@ For Specific Date:
 
 From Edge DevTools Console:
 
-```
-Google Maps JavaScript API has been loaded directly without loading=async. 
+> Google Maps JavaScript API has been loaded directly without loading=async. 
 This can result in suboptimal performance. For best-practice loading patterns please see https://goo.gle/js-api-loading 
-```
 
+Code was using:
 ```HTML
 <script src="https://maps.googleapis.com/maps/api/js?key="" type="text/javascript"></script>
 ```
@@ -74,3 +73,26 @@ Running on Android mobile phone:
 Running full screen:
 
 <img src="examples/Screenshot_20240908_160740_Edge.jpg" width="40%" />
+
+## Installation
+
+To get started with this project, you'll need to have Node.js and npm installed on your machine.
+
+1. Clone the repository:
+   ```PowerShell
+   git clone https://github.com/gilsonator/CrimeBusters.git
+   ```
+1. Navigate to the project directory
+2. Install the dependencies:
+   ```PowerShell
+   npm install
+   ```
+## Running the Project
+Install `http-server` if needed:
+```PowerShell
+npm install http-server --save-dev
+```
+Then run:
+```PowerShell
+npm start
+```
