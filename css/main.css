@@ -23,6 +23,11 @@ body {
     font-size: 14px;
 }
 
+.marker-note {
+    font-size: 10px;
+    color: dimgray
+}
+
 ul {
     padding-inline-start: 30px;
 }

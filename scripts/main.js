@@ -65,7 +65,7 @@ async function initMap(date) {
     map = new Map(document.getElementById("map"), {
         zoom: 12,
         center: centerPosition,
-        mapId: "CRIME_MAP_ID",
+        mapId: "DG202409CSMAP",
     });
 
     currentCircle = new google.maps.Circle({
@@ -118,6 +118,7 @@ async function addMarker(pin) {
     const gMapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURI (pin.Address + ',QLD, Australia');
 
     markerDiv += '<a target="_blank" href="' + gMapUrl + '" tabindex="0"> <span>View on Google Maps</span> </a>'
+    markerDiv += '<p class="marker-note">NOTE: The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred.'
     
     const infoWindow = new InfoWindow({
         content: markerDiv,
