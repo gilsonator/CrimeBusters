@@ -14,8 +14,8 @@ body {
 
 #map {
     height: 100%;
-    float: left;
-    width: 70%;
+    float: right;
+    width: 100%;
 }
 
 .marker p:first-of-type {
@@ -36,7 +36,8 @@ ul {
 }
 #crimeList {
     font-size: 10px;
-    width: 30%;
+    width: 100%;
+    width: 0px;
     height: 100%;
     overflow-y: scroll;
     margin: 0 0 0 4px;
@@ -83,25 +84,4 @@ a.listItem:hover {
 }
 
 /* DG Upgrade: */
-.crime-table {
-    width: 100%;
-    max-width: 340px;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 14px;
-    text-align: left;
-}
-.crime-table th, .crime-table td {
-    padding: 2px 4px;
-    border: 1px solid #ddd;
-}
-.crime-table th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-}
-.crime-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-.crime-table tr:hover {
-    background-color: #f1f1f1;
-}
+
