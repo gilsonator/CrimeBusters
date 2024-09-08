@@ -1,20 +1,21 @@
 # Crime Busters Online Web based Application Upgrade
 This is an upgrade of code I developed to show maps of crimes reported to police. This was used in local news paper website.
 
-**Note: the code is no longer in use, and the crime acusations are old.**
+**Note: the code is no longer in use, and the crime accusations are old.**
 
-> **A first in Australia!**
-
+> A first in Australia!
 
 Back in the day, we worked with Queensland Police to send daily reports, In another stand alone application, I created `.xml` files based on dates of reports. 
 
 They were uploaded to our website and this application was used.
 
 ## Notes
-* Complete rewrite of code
-* I have un-obfuscated my original code downloaded from Wayback Machine
-* Upgrading to latest version of Google Maps API
-* Upgraded to use HTML5 ES6 Modules
+I created this to outline my skills, ability to upgrade old code without original source:
+
+* Complete rewrite of old code.
+* I un-obfuscated my original code downloaded from Wayback Machine.
+* Upgrading to latest version of Google Maps API.
+* Upgraded to use HTML5/ES6 Modules.
 
 ### Old Code Written by myself in 2010
 I used multiple resources to find and download the HTML and related `.css`, `.js` as well as related images.
