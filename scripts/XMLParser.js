@@ -1,6 +1,7 @@
 "use strict";
 /**
  * XMLParser Class
+ * By David Gilson 
  * 
  * This class is responsible for fetching and parsing XML files containing date and event information.
  * 
