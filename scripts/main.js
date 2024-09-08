@@ -1,21 +1,28 @@
-﻿/* 
+﻿"use strict";
+/* 
 David Gilson, Sep 6, 2024
 NOTES:
   I have un-obfuscated the original code
-  Upgraded to latest GoogleMaps Platform
+  * Upgraded to latest GoogleMaps Platform
+  * Upgraded to HTML5 ES6 Modules
 */
 
 // Written by David Gilson, Copyright NQN and David Gilson 2010
 
 // The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred. 
 // This data records property crime reported over periods beginning 12.01pm Monday, Wednesday or Friday until 12 noon on the listed date.
+import { XMLParser } from './XMLParser.js';
 
 let map;
-const xmlPath = "xml/";
-const datesXMLFile = "dates.xml";
 let eventDates;
 let selectedDateID;
 let currentMarkers;
+let lastOpenedInfoWindow;
+let currentCircle;
+
+const xmlPath = "xml/";
+const datesXMLFile = 'dates.xml';
+const parser = new XMLParser(xmlPath);
 
 function formatString(str) {
     return str.toLowerCase().replace(/\b\w/g, function(char) {
@@ -23,19 +30,29 @@ function formatString(str) {
     });
 }
 
-async function load() {
-
+export async function load() {
     map = await initMap();
-    eventDates = await loadParseDatesXML();
-    currentMarkers = await loadMarkers(eventDates[0].FileName); // Load markers xml for first date
-    selectedDateID = 0;
 
-    currentMarkers.forEach(pin => {
-        addMarker(pin); // Adding the first markers on first date
-    });
+    try {
+        const dates = await parser.loadParseDatesXML(datesXMLFile);
+        console.log('Parsed Dates:', dates);
+        eventDates = dates;
+
+        if (eventDates.length > 0) {
+            const events = await parser.loadParseEventsXML(eventDates[0].FileName);
+            console.log('Parsed Events:', events);
+
+            selectedDateID = 0;
+            events.forEach(event => {
+                addMarker(event); // Adding the first markers on first date
+            });
+        } else {
+            console.error('No event dates found.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
-
-let currentCircle;
 
 async function initMap(date) {
     
@@ -62,8 +79,6 @@ async function initMap(date) {
 
     return map;
 }
-
-let lastOpenedInfoWindow;
 
 async function addMarker(pin) {
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
@@ -99,9 +114,8 @@ async function addMarker(pin) {
     markerDiv += "<br>The perpetrators gained entry by <b>" + pin.Entry +"</b>";
     markerDiv += " and removed: " + propertyTakenList + "</p>";
     markerDiv += "<p>Date Reported: <b>" + eventDates[selectedDateID].DateString + "</b></p>";
-    
-    // gMapUrl = 'https://www.google.com/maps/search/?api=1&query=' + pin.Position.lat + ',' + pin.Position.lng;
-    gMapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURI (pin.Address + ',QLD, Australia');
+
+    const gMapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURI (pin.Address + ',QLD, Australia');
 
     markerDiv += '<a target="_blank" href="' + gMapUrl + '" tabindex="0"> <span>View on Google Maps</span> </a>'
     
@@ -120,7 +134,7 @@ async function addMarker(pin) {
 
         currentCircle.setMap (map);
         currentCircle.setCenter (pin.Position);
-        map.setCenter (pin.Position)
+        map.panTo (pin.Position)
     });
 
     infoWindow.addListener("closeclick", () => {
@@ -129,97 +143,11 @@ async function addMarker(pin) {
     });
 }
 
-async function loadParseDatesXML() {
-    try {
-        const response = await fetch(xmlPath + datesXMLFile);
-        const data = await response.text();
-        return parseDatesXML(data);
-    } catch (error) {
-        console.error('Error fetching the XML file:', error);
-        throw error;
-    }
-}
-
-function parseDatesXML(data) {
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(data, 'text/xml')
-    
-    const dateElements = xmlDoc.getElementsByTagName('date');
-    const dates = [];
-
-    for (let i = 0; i < dateElements.length; i++) {
-        const dateString = dateElements[i].getAttribute('DateString');
-        const fileName = dateElements[i].getAttribute('File');
-        const date = dateElements[i].getAttribute('Date');
-        dates.push({
-            DateString: dateString, 
-            FileName: fileName, 
-            Date: new Date(date)
-        });
-    }
-
-    console.log('DateStrings:', dates);
-    return dates;
-}
-
-async function loadMarkers(file) {
-    try {
-        const response = await fetch(xmlPath + file);
-        const data = await response.text();
-        return parseMarkersXML(data);
-    } catch (error) {
-        console.error('Error fetching the XML file:', error);
-        throw error;
-    }
-}
-
-function parseMarkersXML(data) {
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(data, 'text/xml')
-    
-    const markerElements = xmlDoc.getElementsByTagName('marker');
-    const markers = [];
-
-    // Sample:
-    // <marker address="BARRYMAN ST, PIMLICO" lat="-19.2733145" lng="146.7888844" 
-    // type="Steal from vehicle" location="Shopping area" propertyTaken="Phone" entry="Unknown"/>
-	// -19.2542771,146.823100
-    for (let i = 0; i < markerElements.length; i++) {
-        const lat = markerElements[i].getAttribute('lat');
-        const lng = markerElements[i].getAttribute('lng');
-        const address = markerElements[i].getAttribute('address');
-        const type = markerElements[i].getAttribute("type");
-        const propertyTaken = markerElements[i].getAttribute("propertyTaken");
-        const location = markerElements[i].getAttribute("location");
-        const entry = markerElements[i].getAttribute("entry");
-
-        // DG NOTE: There was incorrect attributes for lat, lng in XML:
-        // For Example:
-        //   'Sir Leslie Thiess Dr, Townsville City'
-        //   GMaps Correct: -19.2543634, 146.8255609
-        //   in XML:        -19.2568164, 146.8235810
-        //   differences:     0.002453,    0.0019799
-        //  Calculated Difference using Math.abs(correct, xml) and applied to property, works for most.
-        //      Position: { lat: parseFloat(lat) + 0.002453, lng: parseFloat(lng) + 0.0019799 }, 
-            
-        markers.push({
-            Position: { lat: parseFloat(lat) + 0.002453, lng: parseFloat(lng) + 0.0019799 }, 
-            Address: address,
-            PropertyTaken: propertyTaken,
-            Type: type,
-            Location: location,
-            Entry: entry,
-        });
-    }
-
-    console.log('Markers:', markers);
-    return markers;
-}
-
-
+// Attach the load function to the window object
+window.onload = load;
 
 ///// OLD CODE: ////////////////////////
-
+/*
 var crimeFiles = [];
 
 function datesDownloadComplete(xml) {
@@ -238,7 +166,7 @@ function datesDownloadComplete(xml) {
     }
     document.getElementById("crimeList").innerHTML += " ";
     selectedDateID = null;
-    loadMarkers(0);
+    loadParseEvents(0);
 }
 
 function downloadComplete66(xml) {
@@ -326,3 +254,4 @@ function highlightMarker(event, action) {
       GEvent.trigger(CrimeMarkers[event], "mouseout");
   }
 }
+*/
