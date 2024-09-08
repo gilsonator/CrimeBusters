@@ -103,23 +103,23 @@ async function addMarker(pin) {
       title: pin.Address
     });
 
-    let propertyTakenList = "<ul>";
-    pin.PropertyTaken.split(";").forEach(item => {
-        propertyTakenList += "<li><b>" + item + "</b></li>";
-    });
-    propertyTakenList += "</ul>";
+    let propertyTakenList = `
+  <ul>
+    ${pin.PropertyTaken.split(";").map(item => `<li><b>${item}</b></li>`).join('')}
+  </ul>
+`;
 
-    let markerDiv = "<div class='marker'>";
-    markerDiv += "<p>An alleged <b>" + pin.Type + "</b> event occurred at a <b>" + pin.Location + ".</b>";
-    markerDiv += "<br>The perpetrators gained entry by <b>" + pin.Entry +"</b>";
-    markerDiv += " and removed: " + propertyTakenList + "</p>";
-    markerDiv += "<p>Date Reported: <b>" + eventDates[selectedDateID].DateString + "</b></p>";
-
-    const gMapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURI (pin.Address + ',QLD, Australia');
-
-    markerDiv += '<a target="_blank" href="' + gMapUrl + '" tabindex="0"> <span>View on Google Maps</span> </a>'
-    markerDiv += '<p class="marker-note">NOTE: The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred.'
-    
+    const markerDiv = `
+  <div class='marker'>
+    <p>An alleged <b>${pin.Type}</b> event occurred at a <b>${pin.Location}</b>.</p>
+    <p>The perpetrators gained entry by <b>${pin.Entry}</b> and removed: ${propertyTakenList}</p>
+    <p>Date Reported: <b>${eventDates[selectedDateID].DateString}</b></p>
+    <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(pin.Address + ',QLD,Australia')}" tabindex="0">
+      <span>View on Google Maps</span>
+    </a>
+    <p class="marker-note">NOTE: The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred.</p>
+  </div>
+`;    
     const infoWindow = new InfoWindow({
         content: markerDiv,
     });
