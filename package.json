@@ -1,0 +1,23 @@
+{
+  "name": "crimebusters",
+  "version": "1.0.0",
+  "description": "Google Map with markers showing reported crime events",
+  "main": "index.html",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gilsonator/CrimeBusters.git"
+  },
+  "author": "David Gilson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gilsonator/CrimeBusters/issues"
+  },
+  "homepage": "https://github.com/gilsonator/CrimeBusters#readme"
+}
