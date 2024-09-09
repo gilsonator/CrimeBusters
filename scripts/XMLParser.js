@@ -1,6 +1,8 @@
 /**
  * XMLParser Class
  * 
+ * By David Gilson
+ * 
  * This class provides methods to load and parse XML files, extracting attributes
  * from specified elements and returning them in a structured array format.
  * 
