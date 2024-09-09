@@ -17,7 +17,7 @@ let map;
 let eventDates;
 let selectedDateID;
 let currentMarkers = [];
-let currentMarker;
+let currentMarkerSelected;
 let lastOpenedInfoWindow;
 let currentCircle;
 
@@ -92,6 +92,7 @@ async function addMarker(eventDetails) {
     const defaultIcon = 'images/siren.svg';
     // const hoverIcon = 'images/siren-over.svg';
 
+    // DG NOTE: The lat/lng in xml files are off, slighly adjusted based on difference to Google Maps
     const position = { lat: parseFloat(eventDetails.lat) + 0.002453, lng: parseFloat(eventDetails.lng) + 0.0019799 };
     const icon = document.createElement("img");
     icon.width = 24;
@@ -144,7 +145,8 @@ async function addMarker(eventDetails) {
 
         currentCircle.setMap (map);
         currentCircle.setCenter (position);
-        map.panTo (position)
+        map.panTo (position);
+        currentMarkerSelected = marker;
     });
 
     // Change glyph on mouse over
