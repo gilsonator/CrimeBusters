@@ -23,7 +23,6 @@ let currentCircle;
 
 const xmlPath = "xml/";
 const datesXMLFile = 'dates.xml';
-const parser = new XMLParser(xmlPath);
 
 function formatString(str) {
     return str.toLowerCase().replace(/\b\w/g, function(char) {
@@ -35,14 +34,19 @@ export async function load() {
     map = await initMap();
 
     try {
-        const dates = await parser.loadParseDatesXML(datesXMLFile);
+        const parser = new XMLParser();
+        const dates = await parser.loadXMLParseElement(xmlPath + datesXMLFile, "date");
+
+        // const dates = await parser.loadParseDatesXML(datesXMLFile);
         console.log('Parsed Dates:', dates);
         eventDates = dates;
 
         if (eventDates.length > 0) {
-            const events = await parser.loadParseEventsXML(eventDates[0].FileName);
+            // const events = await parser.loadParseEventsXML(eventDates[0].FileName);
+            const events = await parser.loadXMLParseElement(xmlPath + eventDates[0].File, "marker");
             console.log('Parsed Events:', events);
 
+            // TODO: Make sure to save loaded ents for dates, only load if not done already
             selectedDateID = 0;
             events.forEach(event => {
                 addMarker(event); // Adding the first markers on first date
@@ -88,6 +92,7 @@ async function addMarker(eventDetails) {
     const defaultIcon = 'images/siren.svg';
     // const hoverIcon = 'images/siren-over.svg';
 
+    const position = { lat: parseFloat(eventDetails.lat) + 0.002453, lng: parseFloat(eventDetails.lng) + 0.0019799 };
     const icon = document.createElement("img");
     icon.width = 24;
     icon.height = 24;
@@ -102,23 +107,23 @@ async function addMarker(eventDetails) {
 
     const marker = await new AdvancedMarkerElement({
       map: map,
-      position: eventDetails.Position,
+      position: position,
       content: faPin.element,
-      title: eventDetails.Address
+      title: eventDetails.address
     });
 
     let propertyTakenList = `
   <ul>
-    ${eventDetails.PropertyTaken.split(";").map(item => `<li><b>${item}</b></li>`).join('')}
+    ${eventDetails.propertyTaken.split(";").map(item => `<li><b>${item}</b></li>`).join('')}
   </ul>
 `;
 
     const markerDiv = `
   <div class='marker'>
-    <p>An alleged <b>${eventDetails.Type}</b> event occurred at a <b>${eventDetails.Location}</b>.</p>
-    <p>The perpetrators gained entry by <b>${eventDetails.Entry}</b> and stole: ${propertyTakenList}</p>
+    <p>An alleged <b>${eventDetails.type}</b> event occurred at a <b>${eventDetails.location}</b>.</p>
+    <p>The perpetrators gained entry by <b>${eventDetails.entry}</b> and stole: ${propertyTakenList}</p>
     <p>Date Reported: <b>${eventDates[selectedDateID].DateString}</b></p>
-    <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(eventDetails.Address + ',QLD,Australia')}" tabindex="0">
+    <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(eventDetails.address + ',QLD,Australia')}" tabindex="0">
       <span>View on Google Maps</span>
     </a>
     <p class="marker-note"><b>NOTE:</b> The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred.</p>
@@ -128,7 +133,7 @@ async function addMarker(eventDetails) {
         content: markerDiv,
     });
 
-    infoWindow.setHeaderContent(formatString (eventDetails.Address));
+    infoWindow.setHeaderContent(formatString (eventDetails.address));
     
     // Add a click event listener to the marker
     marker.addListener("click", () => {
@@ -138,8 +143,8 @@ async function addMarker(eventDetails) {
         lastOpenedInfoWindow = infoWindow;
 
         currentCircle.setMap (map);
-        map.panTo (eventDetails.Position)
-        currentCircle.setCenter (eventDetails.Position);
+        currentCircle.setCenter (position);
+        map.panTo (position)
     });
 
     // Change glyph on mouse over
