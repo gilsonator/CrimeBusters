@@ -1,107 +1,73 @@
-"use strict";
 /**
  * XMLParser Class
- * By David Gilson 
  * 
- * This class is responsible for fetching and parsing XML files containing date and event information.
+ * This class provides methods to load and parse XML files, extracting attributes
+ * from specified elements and returning them in a structured array format.
  * 
  * Methods:
- * - loadParseDatesXML: Asynchronously fetches the XML file and parses its date content.
- * - loadParseEvents: Asynchronously fetches the XML file and parses its event content.
+ * - constructor(): Initializes a new instance of the XMLParser class.
+ * - loadXMLParseElement(xmlFile, elementName): Asynchronously loads an XML file,
+ *   parses it, and extracts attributes from specified elements.
  * 
  * Usage:
- * const xmlPath = 'path/to/xml/';
- * const datesXMLFile = 'dates.xml';
- * const eventsXMLFile = 'events.xml';
- * const parser = new XMLParser(xmlPath);
+ * const parser = new XMLParser();
+ * parser.loadXMLParseElement('path/to/xmlfile.xml', 'ElementName')
+ *   .then(attributesArray => {
+ *     console.log(attributesArray);
+ *   })
+ *   .catch(error => {
+ *     console.error('Error:', error);
+ *   });
  * 
- * parser.loadParseDatesXML(datesXMLFile).then(dates => {
- *   console.log('Parsed Dates:', dates);
- * }).catch(error => {
- *   console.error('Error:', error);
- * });
- * 
- * parser.loadParseEventsXML(eventsXMLFile).then(events => {
- *   console.log('Parsed Events:', events);
- * }).catch(error => {
- *   console.error('Error:', error);
- * });
+ * Example Output:
+ * [
+ *   {
+ *     DateString: '2023-04-06',
+ *     FileName: 'example.txt',
+ *     Date: '2023-04-06T00:00:00.000Z'
+ *   },
+ *   ...
+ * ]
  */
-
 export class XMLParser {
-  constructor(xmlPath) {
-    this.xmlPath = xmlPath;
+  constructor() {
+
   }
 
-  async loadParseDatesXML(datesXMLFile) {
+  /**
+   * Asynchronously loads an XML file, parses it, and extracts attributes from specified elements.
+   * 
+   * @param {string} xmlFile - The path to the XML file to be loaded.
+   * @param {string} elementName - The name of the elements to extract attributes from.
+   * @returns {Promise<Array<Object>>} A promise that resolves to an array of objects containing the attributes.
+   * @throws {Error} If there is an error fetching or parsing the XML file.
+   */
+  async loadXMLParseElement(xmlFile, elementName) {
     try {
-      const response = await fetch(this.xmlPath + datesXMLFile);
-      const data = await response.text();
-      return this.#parseDatesXML(data);
+        const response = await fetch(xmlFile);
+        const data = await response.text();
+
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(data, 'text/xml');
+        
+        const elements = xmlDoc.getElementsByTagName(elementName);
+        let attributesArray = [];
+
+        for (let i = 0; i < elements.length; i++) {
+          let attributesObject = {};
+          for (let attr of elements[i].attributes) {
+              if (attr.name === "Date")
+                attributesObject[attr.name] = new Date(attr.value);
+              else
+                attributesObject[attr.name] = attr.value;
+          }
+          attributesArray.push(attributesObject);
+      }
+
+        return attributesArray;
     } catch (error) {
-      console.error('Error fetching the XML file:', error);
-      throw error;
+        console.error('Error fetching the XML file:', error);
+        throw error;
     }
-  }
-
-  async loadParseEventsXML(eventsXMLFile) {
-    try {
-      const response = await fetch(this.xmlPath + eventsXMLFile);
-      const data = await response.text();
-      return this.#parseEventsXML(data);
-    } catch (error) {
-      console.error('Error fetching the XML file:', error);
-      throw error;
-    }
-  }
-
-  #parseDatesXML(data) {
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(data, 'text/xml');
-    
-    const dateElements = xmlDoc.getElementsByTagName('date');
-    const dates = [];
-
-    for (let i = 0; i < dateElements.length; i++) {
-      const dateString = dateElements[i].getAttribute('DateString');
-      const fileName = dateElements[i].getAttribute('File');
-      const date = dateElements[i].getAttribute('Date');
-      dates.push({
-        DateString: dateString, 
-        FileName: fileName, 
-        Date: new Date(date)
-      });
-    }
-
-    return dates;
-  }
-
-  #parseEventsXML(data) {
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(data, 'text/xml');
-    
-    const markerElements = xmlDoc.getElementsByTagName('marker');
-    const markers = [];
-
-    for (let i = 0; i < markerElements.length; i++) {
-      const lat = markerElements[i].getAttribute('lat');
-      const lng = markerElements[i].getAttribute('lng');
-      const address = markerElements[i].getAttribute('address');
-      const type = markerElements[i].getAttribute("type");
-      const propertyTaken = markerElements[i].getAttribute("propertyTaken");
-      const location = markerElements[i].getAttribute("location");
-      const entry = markerElements[i].getAttribute("entry");
-
-      markers.push({
-        Position: { lat: parseFloat(lat) + 0.002453, lng: parseFloat(lng) + 0.0019799 }, 
-        Address: address,
-        PropertyTaken: propertyTaken,
-        Type: type,
-        Location: location,
-        Entry: entry,
-      });
-    }
-
-    return markers;
   }
 }
