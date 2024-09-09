@@ -79,8 +79,21 @@ async function initMap(date) {
         strokeWeight: 1,
         fillColor: "#0000FF",
         fillOpacity: 0.25,
-        radius: 300,
+        radius: 100,
       });
+
+    // Function to show/hide the circle based on zoom level and if InfoWindow is open
+    function checkZoomLevel() {
+        var zoom = map.getZoom();
+        if ((zoom <= 10 || zoom >= 15) && lastOpenedInfoWindow?.map) {
+          currentCircle.setMap(map);
+        } else {
+          currentCircle.setMap(null);
+        }
+    }
+    
+    // Add event listener for zoom changes
+    map.addListener('zoom_changed', checkZoomLevel);
 
     return map;
 }
@@ -143,7 +156,11 @@ async function addMarker(eventDetails) {
         infoWindow.open(map, marker);
         lastOpenedInfoWindow = infoWindow;
 
-        currentCircle.setMap (map);
+        var zoom = map.getZoom();
+        if (zoom <= 10 || zoom >= 15) {
+          currentCircle.setMap(map);
+        }
+
         currentCircle.setCenter (position);
         map.panTo (position);
         currentMarkerSelected = marker;
