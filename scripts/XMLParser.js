@@ -73,7 +73,6 @@ export class XMLParser {
       });
     }
 
-    console.log('DateStrings:', dates);
     return dates;
   }
 
@@ -103,7 +102,6 @@ export class XMLParser {
       });
     }
 
-    console.log('Markers:', markers);
     return markers;
   }
 }
