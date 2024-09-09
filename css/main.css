@@ -32,7 +32,14 @@ ul {
     padding-inline-start: 30px;
 }
 
-/* DG: Bit of a hack */
+/* DG: Bit of a hack, does change all headers! */
+.gm-style-iw-ch
+{
+    font-weight: bold;
+    font-size: 20px;
+}
+/* Following was just a test, didn't want to change maps theme, and it affected all headers */
+/*
 .gm-style-iw-ch
 {
     font-weight: bold;
@@ -47,10 +54,10 @@ ul {
     margin-right: -12px;
     background-color:#002148;
     background-image: url(../../images/police_banner.jpg);
-    background-repeat: repeat-x; /* or repeat, repeat-x, repeat-y */;
+    background-repeat: repeat-x;
     color: white;
 }
-
+*/
 #crimeList {
     font-size: 10px;
     width: 100%;

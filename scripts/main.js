@@ -17,6 +17,7 @@ let map;
 let eventDates;
 let selectedDateID;
 let currentMarkers = [];
+let currentMarker;
 let lastOpenedInfoWindow;
 let currentCircle;
 
@@ -84,10 +85,13 @@ async function addMarker(eventDetails) {
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
     const { InfoWindow } = await google.maps.importLibrary("maps");
 
+    const defaultIcon = 'images/siren.svg';
+    // const hoverIcon = 'images/siren-over.svg';
+
     const icon = document.createElement("img");
     icon.width = 24;
     icon.height = 24;
-    icon.src = "images/siren.svg";
+    icon.src = defaultIcon;
 
     const faPin = new PinElement({
       glyph: icon,
@@ -138,6 +142,17 @@ async function addMarker(eventDetails) {
         currentCircle.setCenter (eventDetails.Position);
     });
 
+    // Change glyph on mouse over
+    // Was just a test, didn't want to change maps theme
+    /*
+    marker.content.addEventListener('mouseover', () => {
+        icon.src = hoverIcon;
+    });
+
+    marker.content.addEventListener('mouseout', () => {
+        icon.src = defaultIcon;
+    });
+    */
     infoWindow.addListener("closeclick", () => {
         lastOpenedInfoWindow = null;
         currentCircle.setMap(null);
@@ -147,16 +162,22 @@ async function addMarker(eventDetails) {
 }
 
 export function removeMarkers() {
-    for (let marker of currentMarkers) {
-        marker.setMap(null);
-    }
+    currentMarkers.forEach(marker => marker.setMap(null));
     currentMarkers = [];
-    currentCircle.setMap(null);
-  }
+    if (currentCircle) {
+        currentCircle.setMap(null);
+    }
+}
 
-// Attach the load function to the window object
+export function showMarker(eventIndex) {
+    google.maps.event.trigger(currentMarkers[eventIndex], 'click');
+}
+
+// Attach the functions to the window object
 window.onload = load;
 window.removeMarkers = removeMarkers;
+window.showMarker = showMarker;
+
 
 ///// OLD CODE: ////////////////////////
 /*
