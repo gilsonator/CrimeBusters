@@ -9,9 +9,9 @@ NOTES:
 
 // Written by David Gilson, Copyright NQN and David Gilson 2010
 
-// The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred. 
+// The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred.
 // This data records property crime reported over periods beginning 12.01pm Monday, Wednesday or Friday until 12 noon on the listed date.
-import { XMLParser } from './XMLParser.js';
+import { XMLParser } from "./XMLParser.js";
 
 let map;
 let eventDates;
@@ -22,153 +22,170 @@ let lastOpenedInfoWindow;
 let currentCircle;
 
 const xmlPath = "xml/";
-const datesXMLFile = 'dates.xml';
+const datesXMLFile = "dates.xml";
 
 function formatString(str) {
-    return str.toLowerCase().replace(/\b\w/g, function(char) {
-        return char.toUpperCase();
-    });
+  return str.toLowerCase().replace(/\b\w/g, function (char) {
+    return char.toUpperCase();
+  });
 }
 
 export async function load() {
-    map = await initMap();
+  map = await initMap();
 
-    try {
-        const parser = new XMLParser();
-        const dates = await parser.loadXMLParseElement(xmlPath + datesXMLFile, "date");
+  try {
+    const parser = new XMLParser();
+    const dates = await parser.loadXMLParseElement(
+      xmlPath + datesXMLFile,
+      "date"
+    );
 
-        // const dates = await parser.loadParseDatesXML(datesXMLFile);
-        console.log('Parsed Dates:', dates);
-        eventDates = dates;
+    // const dates = await parser.loadParseDatesXML(datesXMLFile);
+    console.log("Parsed Dates:", dates);
+    eventDates = dates;
 
-        if (eventDates.length > 0) {
-            // const events = await parser.loadParseEventsXML(eventDates[0].FileName);
-            const events = await parser.loadXMLParseElement(xmlPath + eventDates[0].File, "marker");
-            console.log('Parsed Events:', events);
+    if (eventDates.length > 0) {
+      // const events = await parser.loadParseEventsXML(eventDates[0].FileName);
+      const events = await parser.loadXMLParseElement(
+        xmlPath + eventDates[0].File,
+        "marker"
+      );
+      console.log("Parsed Events:", events);
 
-            // TODO: Make sure to save loaded ents for dates, only load if not done already
-            selectedDateID = 0;
-            events.forEach(event => {
-                addMarker(event); // Adding the first markers on first date
-            });
-        } else {
-            console.error('No event dates found.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
+      // TODO: Make sure to save loaded ents for dates, only load if not done already
+      selectedDateID = 0;
+      events.forEach((event) => {
+        addMarker(event); // Adding the first markers on first date
+      });
+    } else {
+      console.error("No event dates found.");
     }
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
 async function initMap(date) {
-    
-    // Location set to Townsville City
-    const centerPosition = { lat: -19.285221, lng: 146.773911 };
-    // Request needed libraries.
-    //@ts-ignore
-    const { Map } = await google.maps.importLibrary("maps");
-    
-    map = new Map(document.getElementById("map"), {
-        zoom: 12,
-        center: centerPosition,
-        mapId: "DG202409CSMAP",
-    });
+  // Location set to Townsville City
+  const centerPosition = { lat: -19.285221, lng: 146.773911 };
+  // Request needed libraries.
+  //@ts-ignore
+  const { Map } = await google.maps.importLibrary("maps");
 
-    currentCircle = new google.maps.Circle({
-        strokeColor: "#0000FF",
-        strokeOpacity: 0.8,
-        strokeWeight: 1,
-        fillColor: "#0000FF",
-        fillOpacity: 0.25,
-        radius: 100,
-      });
+  map = new Map(document.getElementById("map"), {
+    zoom: 12,
+    center: centerPosition,
+    mapId: "DG202409CSMAP",
+  });
 
-    // Function to show/hide the circle based on zoom level and if InfoWindow is open
-    function checkZoomLevel() {
-        var zoom = map.getZoom();
-        if ((zoom <= 10 || zoom >= 15) && lastOpenedInfoWindow?.map) {
-          currentCircle.setMap(map);
-        } else {
-          currentCircle.setMap(null);
-        }
+  currentCircle = new google.maps.Circle({
+    strokeColor: "#0000FF",
+    strokeOpacity: 0.8,
+    strokeWeight: 1,
+    fillColor: "#0000FF",
+    fillOpacity: 0.25,
+    radius: 100,
+  });
+
+  // Function to show/hide the circle based on zoom level and if InfoWindow is open
+  function checkZoomLevel() {
+    var zoom = map.getZoom();
+    if ((zoom <= 10 || zoom >= 16) && lastOpenedInfoWindow?.map) {
+      currentCircle.setMap(map);
+    } else {
+      currentCircle.setMap(null);
     }
-    
-    // Add event listener for zoom changes
-    map.addListener('zoom_changed', checkZoomLevel);
+    console.log("Current Zoom level: " + zoom);
+  }
 
-    return map;
+  // Add event listener for zoom changes
+  map.addListener("zoom_changed", checkZoomLevel);
+
+  return map;
 }
 
 async function addMarker(eventDetails) {
-    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
-    const { InfoWindow } = await google.maps.importLibrary("maps");
+  const { AdvancedMarkerElement, PinElement } =
+    await google.maps.importLibrary("marker");
+  const { InfoWindow } = await google.maps.importLibrary("maps");
 
-    const defaultIcon = 'images/siren.svg';
-    // const hoverIcon = 'images/siren-over.svg';
+  const defaultIcon = "images/siren.svg";
+  // const hoverIcon = 'images/siren-over.svg';
 
-    // DG NOTE: The lat/lng in xml files are off, slighly adjusted based on difference to Google Maps
-    const position = { lat: parseFloat(eventDetails.lat) + 0.002453, lng: parseFloat(eventDetails.lng) + 0.0019799 };
-    const icon = document.createElement("img");
-    icon.width = 24;
-    icon.height = 24;
-    icon.src = defaultIcon;
+  // DG NOTE: The lat/lng in xml files are off, slighly adjusted based on difference to Google Maps
+  const position = {
+    lat: parseFloat(eventDetails.lat) + 0.002453,
+    lng: parseFloat(eventDetails.lng) + 0.0019799,
+  };
+  const icon = document.createElement("img");
+  icon.width = 24;
+  icon.height = 24;
+  icon.src = defaultIcon;
 
-    const faPin = new PinElement({
-      glyph: icon,
-      background: "white",
-      borderColor: "blue",
-      scale: 1,
-    });
+  const faPin = new PinElement({
+    glyph: icon,
+    background: "white",
+    borderColor: "blue",
+    scale: 1,
+  });
 
-    const marker = await new AdvancedMarkerElement({
-      map: map,
-      position: position,
-      content: faPin.element,
-      title: eventDetails.address
-    });
+  const marker = await new AdvancedMarkerElement({
+    map: map,
+    position: position,
+    content: faPin.element,
+    title: eventDetails.address,
+  });
 
-    let propertyTakenList = `
+  let propertyTakenList = `
   <ul>
-    ${eventDetails.propertyTaken.split(";").map(item => `<li><b>${item}</b></li>`).join('')}
+    ${eventDetails.propertyTaken
+      .split(";")
+      .map((item) => `<li><b>${item}</b></li>`)
+      .join("")}
   </ul>
 `;
 
-    const markerDiv = `
+  const markerDiv = `
   <div class='marker'>
     <p>An alleged <b>${eventDetails.type}</b> event occurred at a <b>${eventDetails.location}</b>.</p>
     <p>The perpetrators gained entry by <b>${eventDetails.entry}</b> and stole: ${propertyTakenList}</p>
     <p>Date Reported: <b>${eventDates[selectedDateID].DateString}</b></p>
-    <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(eventDetails.address + ',QLD,Australia')}" tabindex="0">
+    <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(eventDetails.address + ",QLD,Australia")}" tabindex="0">
       <span>View on Google Maps</span>
     </a>
     <p class="marker-note"><b>NOTE:</b> The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred.</p>
   </div>
-`;    
-    const infoWindow = new InfoWindow({
-        content: markerDiv,
-    });
+`;
+  const infoWindow = new InfoWindow({
+    content: markerDiv,
+  });
 
-    infoWindow.setHeaderContent(formatString (eventDetails.address));
-    
-    // Add a click event listener to the marker
-    marker.addListener("click", () => {
-        if (lastOpenedInfoWindow) { lastOpenedInfoWindow.close(); };
-        if (currentCircle) { currentCircle.setMap(null); };
-        infoWindow.open(map, marker);
-        lastOpenedInfoWindow = infoWindow;
+  infoWindow.setHeaderContent(formatString(eventDetails.address));
 
-        var zoom = map.getZoom();
-        if (zoom <= 10 || zoom >= 15) {
-          currentCircle.setMap(map);
-        }
+  // Add a click event listener to the marker
+  marker.addListener("click", () => {
+    if (lastOpenedInfoWindow) {
+      lastOpenedInfoWindow.close();
+    }
+    if (currentCircle) {
+      currentCircle.setMap(null);
+    }
+    infoWindow.open(map, marker);
+    lastOpenedInfoWindow = infoWindow;
 
-        currentCircle.setCenter (position);
-        map.panTo (position);
-        currentMarkerSelected = marker;
-    });
+    var zoom = map.getZoom();
+    if (zoom <= 10 || zoom >= 16) {
+      currentCircle.setMap(map);
+    }
 
-    // Change glyph on mouse over
-    // Was just a test, didn't want to change maps theme
-    /*
+    currentCircle.setCenter(position);
+    map.panTo(position);
+    currentMarkerSelected = marker;
+  });
+
+  // Change glyph on mouse over
+  // Was just a test, didn't want to change maps theme
+  /*
     marker.content.addEventListener('mouseover', () => {
         icon.src = hoverIcon;
     });
@@ -177,31 +194,30 @@ async function addMarker(eventDetails) {
         icon.src = defaultIcon;
     });
     */
-    infoWindow.addListener("closeclick", () => {
-        lastOpenedInfoWindow = null;
-        currentCircle.setMap(null);
-    });
+  infoWindow.addListener("closeclick", () => {
+    lastOpenedInfoWindow = null;
+    currentCircle.setMap(null);
+  });
 
-    currentMarkers.push (marker);
+  currentMarkers.push(marker);
 }
 
 export function removeMarkers() {
-    currentMarkers.forEach(marker => marker.setMap(null));
-    currentMarkers = [];
-    if (currentCircle) {
-        currentCircle.setMap(null);
-    }
+  currentMarkers.forEach((marker) => marker.setMap(null));
+  currentMarkers = [];
+  if (currentCircle) {
+    currentCircle.setMap(null);
+  }
 }
 
 export function showMarker(eventIndex) {
-    google.maps.event.trigger(currentMarkers[eventIndex], 'click');
+  google.maps.event.trigger(currentMarkers[eventIndex], "click");
 }
 
 // Attach the functions to the window object
 window.onload = load;
 window.removeMarkers = removeMarkers;
 window.showMarker = showMarker;
-
 
 ///// OLD CODE: ////////////////////////
 /*
