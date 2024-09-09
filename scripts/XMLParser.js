@@ -57,11 +57,15 @@ export class XMLParser {
 
         for (let i = 0; i < elements.length; i++) {
           let attributesObject = {};
+
+          // const dateRegex = /^date$/i; // Test for a known 'date' attribute name, regex case-insensitive
+
           for (let attr of elements[i].attributes) {
-              if (attr.name === "Date")
-                attributesObject[attr.name] = new Date(attr.value);
-              else
+            // if (dateRegex.test(attr.name)) {
+            //  attributesObject[attr.name] = new Date(attr.value);
+            // } else {
                 attributesObject[attr.name] = attr.value;
+            //}
           }
           attributesArray.push(attributesObject);
       }
