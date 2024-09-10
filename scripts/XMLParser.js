@@ -1,16 +1,16 @@
 /**
  * XMLParser Class
- * 
+ *
  * By David Gilson
- * 
+ *
  * This class provides methods to load and parse XML files, extracting attributes
  * from specified elements and returning them in a structured array format.
- * 
+ *
  * Methods:
  * - constructor(): Initializes a new instance of the XMLParser class.
  * - loadXMLParseElement(xmlFile, elementName): Asynchronously loads an XML file,
  *   parses it, and extracts attributes from specified elements.
- * 
+ *
  * Usage:
  * const parser = new XMLParser();
  * parser.loadXMLParseElement('path/to/xmlfile.xml', 'ElementName')
@@ -20,7 +20,7 @@
  *   .catch(error => {
  *     console.error('Error:', error);
  *   });
- * 
+ *
  * Example Output:
  * [
  *   {
@@ -32,13 +32,11 @@
  * ]
  */
 export class XMLParser {
-  constructor() {
-
-  }
+  constructor() {}
 
   /**
    * Asynchronously loads an XML file, parses it, and extracts attributes from specified elements.
-   * 
+   *
    * @param {string} xmlFile - The path to the XML file to be loaded.
    * @param {string} elementName - The name of the elements to extract attributes from.
    * @returns {Promise<Array<Object>>} A promise that resolves to an array of objects containing the attributes.
@@ -46,34 +44,34 @@ export class XMLParser {
    */
   async loadXMLParseElement(xmlFile, elementName) {
     try {
-        const response = await fetch(xmlFile);
-        const data = await response.text();
+      const response = await fetch(xmlFile);
+      const data = await response.text();
 
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(data, 'text/xml');
-        
-        const elements = xmlDoc.getElementsByTagName(elementName);
-        let attributesArray = [];
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(data, 'text/xml');
 
-        for (let i = 0; i < elements.length; i++) {
-          let attributesObject = {};
+      const elements = xmlDoc.getElementsByTagName(elementName);
+      let attributesArray = [];
 
-          // const dateRegex = /^date$/i; // Test for a known 'date' attribute name, regex case-insensitive
+      for (let i = 0; i < elements.length; i++) {
+        let attributesObject = {};
 
-          for (let attr of elements[i].attributes) {
-            // if (dateRegex.test(attr.name)) {
-            //  attributesObject[attr.name] = new Date(attr.value);
-            // } else {
-                attributesObject[attr.name] = attr.value;
-            //}
-          }
-          attributesArray.push(attributesObject);
+        // const dateRegex = /^date$/i; // Test for a known 'date' attribute name, regex case-insensitive
+
+        for (let attr of elements[i].attributes) {
+          // if (dateRegex.test(attr.name)) {
+          //  attributesObject[attr.name] = new Date(attr.value);
+          // } else {
+          attributesObject[attr.name] = attr.value;
+          //}
+        }
+        attributesArray.push(attributesObject);
       }
 
-        return attributesArray;
+      return attributesArray;
     } catch (error) {
-        console.error('Error fetching the XML file:', error);
-        throw error;
+      console.error('Error fetching the XML file:', error);
+      throw error;
     }
   }
 }

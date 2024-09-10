@@ -1,5 +1,4 @@
-﻿
-/**
+﻿/**
     Created by: David Gilson 27/01/2009
     
     Processes the query strings and allows access by named key
@@ -18,23 +17,26 @@
             Additionally, decodeURIComponent is used instead of unescape as unescape is deprecated.
 */
 class QueryStringProcessor {
-    constructor() {
-        this.querystrings = new Map();
-        const url = window.location.search;
+  constructor() {
+    this.querystrings = new Map();
+    const url = window.location.search;
 
-        if (url) {
-            const data = url.substring((start = 1));
-            const splitted = data.split("&");
+    if (url) {
+      const data = url.substring((start = 1));
+      const splitted = data.split('&');
 
-            for (let i = 0; i < splitted.length; i++) {
-                const items = splitted[i].split("=");
-                this.querystrings.set(items[0].toLowerCase(), decodeURIComponent(items[1]));
-            }
-        }
+      for (let i = 0; i < splitted.length; i++) {
+        const items = splitted[i].split('=');
+        this.querystrings.set(
+          items[0].toLowerCase(),
+          decodeURIComponent(items[1])
+        );
+      }
     }
+  }
 
-    get(key) {
-        const value = this.querystrings.get(key.toLowerCase());
-        return value !== undefined ? value : "";
-    }
+  get(key) {
+    const value = this.querystrings.get(key.toLowerCase());
+    return value !== undefined ? value : '';
+  }
 }

@@ -1,4 +1,4 @@
-﻿"use strict";
+﻿'use strict';
 /* 
 David Gilson, Sep 6, 2024
 NOTES:
@@ -11,7 +11,7 @@ NOTES:
 
 // The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred.
 // This data records property crime reported over periods beginning 12.01pm Monday, Wednesday or Friday until 12 noon on the listed date.
-import { XMLParser } from "./XMLParser.js";
+import { XMLParser } from './XMLParser.js';
 
 let map;
 let eventDates;
@@ -21,8 +21,8 @@ let currentMarkerSelected;
 let lastOpenedInfoWindow;
 let currentCircle;
 
-const xmlPath = "xml/";
-const datesXMLFile = "dates.xml";
+const xmlPath = 'xml/';
+const datesXMLFile = 'dates.xml';
 
 function formatString(str) {
   return str.toLowerCase().replace(/\b\w/g, function (char) {
@@ -37,31 +37,31 @@ export async function load() {
     const parser = new XMLParser();
     const dates = await parser.loadXMLParseElement(
       xmlPath + datesXMLFile,
-      "date"
+      'date'
     );
 
     // const dates = await parser.loadParseDatesXML(datesXMLFile);
-    console.log("Parsed Dates:", dates);
+    console.log('Parsed Dates:', dates);
     eventDates = dates;
 
     if (eventDates.length > 0) {
       // const events = await parser.loadParseEventsXML(eventDates[0].FileName);
       const events = await parser.loadXMLParseElement(
         xmlPath + eventDates[0].File,
-        "marker"
+        'marker'
       );
-      console.log("Parsed Events:", events);
+      console.log('Parsed Events:', events);
 
       // TODO: Make sure to save loaded ents for dates, only load if not done already
       selectedDateID = 0;
-      events.forEach((event) => {
+      events.forEach(event => {
         addMarker(event); // Adding the first markers on first date
       });
     } else {
-      console.error("No event dates found.");
+      console.error('No event dates found.');
     }
   } catch (error) {
-    console.error("Error:", error);
+    console.error('Error:', error);
   }
 }
 
@@ -70,19 +70,19 @@ async function initMap(date) {
   const centerPosition = { lat: -19.285221, lng: 146.773911 };
   // Request needed libraries.
   //@ts-ignore
-  const { Map } = await google.maps.importLibrary("maps");
+  const { Map } = await google.maps.importLibrary('maps');
 
-  map = new Map(document.getElementById("map"), {
+  map = new Map(document.getElementById('map'), {
     zoom: 12,
     center: centerPosition,
-    mapId: "DG202409CSMAP",
+    mapId: 'DG202409CSMAP',
   });
 
   currentCircle = new google.maps.Circle({
-    strokeColor: "#0000FF",
+    strokeColor: '#0000FF',
     strokeOpacity: 0.8,
     strokeWeight: 1,
-    fillColor: "#0000FF",
+    fillColor: '#0000FF',
     fillOpacity: 0.25,
     radius: 100,
   });
@@ -95,21 +95,21 @@ async function initMap(date) {
     } else {
       currentCircle.setMap(null);
     }
-    console.log("Current Zoom level: " + zoom);
+    console.log('Current Zoom level: ' + zoom);
   }
 
   // Add event listener for zoom changes
-  map.addListener("zoom_changed", checkZoomLevel);
+  map.addListener('zoom_changed', checkZoomLevel);
 
   return map;
 }
 
 async function addMarker(eventDetails) {
   const { AdvancedMarkerElement, PinElement } =
-    await google.maps.importLibrary("marker");
-  const { InfoWindow } = await google.maps.importLibrary("maps");
+    await google.maps.importLibrary('marker');
+  const { InfoWindow } = await google.maps.importLibrary('maps');
 
-  const defaultIcon = "images/siren.svg";
+  const defaultIcon = 'images/siren.svg';
   // const hoverIcon = 'images/siren-over.svg';
 
   // DG NOTE: The lat/lng in xml files are off, slighly adjusted based on difference to Google Maps
@@ -117,15 +117,15 @@ async function addMarker(eventDetails) {
     lat: parseFloat(eventDetails.lat) + 0.002453,
     lng: parseFloat(eventDetails.lng) + 0.0019799,
   };
-  const icon = document.createElement("img");
+  const icon = document.createElement('img');
   icon.width = 24;
   icon.height = 24;
   icon.src = defaultIcon;
 
   const faPin = new PinElement({
     glyph: icon,
-    background: "white",
-    borderColor: "blue",
+    background: 'white',
+    borderColor: 'blue',
     scale: 1,
   });
 
@@ -139,9 +139,9 @@ async function addMarker(eventDetails) {
   let propertyTakenList = `
   <ul>
     ${eventDetails.propertyTaken
-      .split(";")
-      .map((item) => `<li><b>${item}</b></li>`)
-      .join("")}
+      .split(';')
+      .map(item => `<li><b>${item}</b></li>`)
+      .join('')}
   </ul>
 `;
 
@@ -150,7 +150,7 @@ async function addMarker(eventDetails) {
     <p>An alleged <b>${eventDetails.type}</b> event occurred at a <b>${eventDetails.location}</b>.</p>
     <p>The perpetrators gained entry by <b>${eventDetails.entry}</b> and stole: ${propertyTakenList}</p>
     <p>Date Reported: <b>${eventDates[selectedDateID].DateString}</b></p>
-    <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(eventDetails.address + ",QLD,Australia")}" tabindex="0">
+    <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(eventDetails.address + ',QLD,Australia')}" tabindex="0">
       <span>View on Google Maps</span>
     </a>
     <p class="marker-note"><b>NOTE:</b> The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred.</p>
@@ -163,7 +163,7 @@ async function addMarker(eventDetails) {
   infoWindow.setHeaderContent(formatString(eventDetails.address));
 
   // Add a click event listener to the marker
-  marker.addListener("click", () => {
+  marker.addListener('click', () => {
     if (lastOpenedInfoWindow) {
       lastOpenedInfoWindow.close();
     }
@@ -194,7 +194,7 @@ async function addMarker(eventDetails) {
         icon.src = defaultIcon;
     });
     */
-  infoWindow.addListener("closeclick", () => {
+  infoWindow.addListener('closeclick', () => {
     lastOpenedInfoWindow = null;
     currentCircle.setMap(null);
   });
@@ -203,7 +203,7 @@ async function addMarker(eventDetails) {
 }
 
 export function removeMarkers() {
-  currentMarkers.forEach((marker) => marker.setMap(null));
+  currentMarkers.forEach(marker => marker.setMap(null));
   currentMarkers = [];
   if (currentCircle) {
     currentCircle.setMap(null);
@@ -211,7 +211,7 @@ export function removeMarkers() {
 }
 
 export function showMarker(eventIndex) {
-  google.maps.event.trigger(currentMarkers[eventIndex], "click");
+  google.maps.event.trigger(currentMarkers[eventIndex], 'click');
 }
 
 // Attach the functions to the window object
