@@ -9,11 +9,18 @@
     
     <script type="module" src="./scripts/XMLParser.js" async></script>
     <script type="module" src="./scripts/main.js" defer></script>
+    
+    <script>
+      function collapseRight() {
+        document.querySelector('#crimeList').classList.toggle('collapsed');
+      }
+      </script>
   </head>
   <body>
-    <div>
+    <div style="width: 100px; display: flex; flex-direction: column">
       <button onclick="showMarker(10)">Show Marker 10</button>
-      <button onclick="removeMarkers()">Remove</button>
+      <button onclick="removeMarkers()">Remove All</button>
+      <button onclick="collapseRight()" title="toggle" >&#9654;</button>
     </div>
     <div id="map">Loading...</div>
     <div id="crimeList"></div>

@@ -56,13 +56,21 @@ export async function load() {
 
       // TODO: Make sure to save loaded ents for dates, only load if not done already
       selectedDateID = 0;
+      let eventCount = 0;
       events.forEach(event => {
         addMarker(event); // Adding the first markers on first date
 
       // TEMP DG::: function addToList(event, location, propertyTaken) {
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = formatString(event.address);
-        tempDiv.className = 'listItem'
+        tempDiv.className = 'listItem';
+        tempDiv.setAttribute('data-id', eventCount++);
+        tempDiv.addEventListener('click', (event) => {
+          // loadMarkers(index);
+          console.log ('Address clicked:', event.target.innerHTML);
+          showMarker(event.target.dataset.id);
+          return false;
+        });
         document.getElementById("crimes_" + selectedDateID).appendChild (tempDiv);
       //}
       });
@@ -223,17 +231,6 @@ async function addMarker(eventDetails) {
     currentMarkerSelected = marker;
   });
 
-  // Change glyph on mouse over
-  // Was just a test, didn't want to change maps theme
-  /*
-    marker.content.addEventListener('mouseover', () => {
-        icon.src = hoverIcon;
-    });
-
-    marker.content.addEventListener('mouseout', () => {
-        icon.src = defaultIcon;
-    });
-    */
   infoWindow.addListener('closeclick', () => {
     lastOpenedInfoWindow = null;
     currentCircle.setMap(null);
@@ -250,8 +247,9 @@ export function removeMarkers() {
   }
 }
 
-export function showMarker(eventIndex) {
-  google.maps.event.trigger(currentMarkers[eventIndex], 'click');
+export function showMarker(marker) {
+  //google.maps.event.trigger(marker, 'click');
+  google.maps.event.trigger(currentMarkers[marker], 'click');
 }
 
 // Attach the functions to the window object

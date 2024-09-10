@@ -12,10 +12,17 @@ body {
   font-family: "Roboto, Arial, sans-serif";
 }
 
+body {
+    display: flex;
+}
+
 #map {
     height: 100%;
     float: left;
-    width: 80%;
+    /* width: 80%; */
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
 }
 
 .marker p:first-of-type {
@@ -38,33 +45,21 @@ ul {
     font-weight: bold;
     font-size: 20px;
 }
-/* Following was just a test, didn't want to change maps theme, and it affected all headers */
-/*
-.gm-style-iw-ch
-{
-    font-weight: bold;
-    font-size: 20px;
-    padding-top: 12px;
-    padding-left: 10px;
-    text-shadow: 2px 4px 10px rgba(0, 0, 0, 10);
-}
 
-.gm-style-iw-chr {
-    margin-left: -12px; 
-    margin-right: -12px;
-    background-color:#002148;
-    background-image: url(../../images/police_banner.jpg);
-    background-repeat: repeat-x;
-    color: white;
-}
-*/
 #crimeList {
     font-size: 14px;
-    width: 20%;
+    width: 200px;
     float: right;
     /* width: 0px; for sliding out from side*/
     height: 100%;
     overflow-y: auto ;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.5s;
+}
+
+.collapsed {
+    width: 0 !important; /* Target width for animation */
 }
 
 .crimeListDateHeading {
