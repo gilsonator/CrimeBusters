@@ -45,7 +45,9 @@ export async function load() {
     eventDates = dates;
 
     if (eventDates.length > 0) {
+      await initDatesList(eventDates);
       // const events = await parser.loadParseEventsXML(eventDates[0].FileName);
+      // TODO: Loading first is temp... 
       const events = await parser.loadXMLParseElement(
         xmlPath + eventDates[0].File,
         'marker'
@@ -56,6 +58,13 @@ export async function load() {
       selectedDateID = 0;
       events.forEach(event => {
         addMarker(event); // Adding the first markers on first date
+
+      // TEMP DG::: function addToList(event, location, propertyTaken) {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = formatString(event.address);
+        tempDiv.className = 'listItem'
+        document.getElementById("crimes_" + selectedDateID).appendChild (tempDiv);
+      //}
       });
     } else {
       console.error('No event dates found.');
@@ -63,6 +72,37 @@ export async function load() {
   } catch (error) {
     console.error('Error:', error);
   }
+}
+
+async function initDatesList(dates) {
+  const fragment = document.createDocumentFragment();
+
+  // Arrow code: Right arrow: &#9654; Down Arrow: &#9660;
+  dates.forEach((date, index) => {
+    const dateString = date.DateString;
+    const dateHeaderHTML = `
+      <div class='crimeListDateHeading' id='heading_${index}'>
+        <span class="triangle">&#9654;</span>${dateString}
+      </div>
+      <div class='crimeListDIV' id='crimes_${index}'></div>
+      `;
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = dateHeaderHTML;
+    while (tempDiv.firstChild) {
+      fragment.appendChild(tempDiv.firstChild);
+    }
+  });
+
+  // console.log (fragment);
+  document.getElementById('crimeList').appendChild(fragment);
+
+  dates.forEach((date, index) => {
+    document.getElementById(`heading_${index}`).addEventListener('click', () => {
+      // loadMarkers(index);
+      console.log ('Date Heading clicked:', date);
+      return false;
+    });
+  });
 }
 
 async function initMap(date) {
@@ -146,7 +186,7 @@ async function addMarker(eventDetails) {
 `;
 
   const markerDiv = `
-  <div class='marker'>
+  <div class='marker' data-id='${currentMarkers.length}'>
     <p>An alleged <b>${eventDetails.type}</b> event occurred at a <b>${eventDetails.location}</b>.</p>
     <p>The perpetrators gained entry by <b>${eventDetails.entry}</b> and stole: ${propertyTakenList}</p>
     <p>Date Reported: <b>${eventDates[selectedDateID].DateString}</b></p>
@@ -255,31 +295,7 @@ function downloadComplete66(xml) {
   document.getElementById("marker" + selectedDateID).src = "type";
 
   for (var index = 0; index < addresses.length; index++) {
-      var location = addresses[index].getAttribute("location");
-      var propertyTaken = addresses[index].getAttribute("propertyTaken");
-      var entry = addresses[index].getAttribute("entry");
-      var lat = addresses[index].getAttribute("lat");
-      var lng = addresses[index].getAttribute("lng");
-      var gLatLang = new GLatLng(parseFloat(addresses[index].getAttribute("lat")), parseFloat(addresses[index].getAttribute("lng")));
-      markerOptions = {
-          icon: iconCrime
-      };
-      var markerDiv = "<div class='marker'>";
-      markerDiv += "<div class='addressDIV' style='background-image: url(images/police_banner.jpg);'>";
-      markerDiv += "<div class='addressLabel'>" + location + "</div>";
-      markerDiv += "<div class='addressShadow'>" + location + "</div>";
-      markerDiv += "</div>";
-      markerDiv += "<div class='markerBody'>";
-      markerDiv += "<table cellpadding='1' cellspacing='1' width='340'>";
-      markerDiv += "<tr><td width='120'>Crime:</td><td><b>" + propertyTaken + "</b></td></tr>";
-      markerDiv += "<tr><td>Location Type:</td><td><b>" + entry + "</b></td></tr>";
-      markerDiv += "<tr><td>Property Taken:</td><td><b>" + lat + "</b></td></tr>";
-      markerDiv += "<tr><td>Entry Gained by:</td><td><b>" + lng + "</b></td></tr>";
-      markerDiv += "</table></div></div>";
-      addToList(index, location);
-      var gMarker = createMarker(gLatLang, markerOptions, markerDiv);
-      crimeMarkers.push(gMarker);
-  }
+
 
   CrimeMarkers = crimeMarkers;
   mgr.refresh(tmp, 1);
@@ -294,37 +310,6 @@ function addToList(event, location, propertyTaken) {
   document.getElementById("pmimg_" + selectedDateID).innerHTML += markerDiv;
 }
 
-function createMarker(gLatLang, src, markerDiv) {
-  var gMarker = new GMarker(gLatLang, src);
 
-  GEvent.addListener(gMarker, "click", function() {
-      gMarker.openInfoWindowHtml(markerDiv);
-  });
 
-  GEvent.addListener(gMarker, "mouseover", function() {
-      try {
-          gMarker.setImage("images/police_light_over.png");
-      } catch (e) {}
-  });
-
-  GEvent.addListener(gMarker, "mouseout", function() {
-      try {
-          gMarker.setImage("images/police_light.png");
-      } catch (e) {}
-  });
-
-  return gMarker;
-}
-
-function showMarker(event) {
-  GEvent.trigger(CrimeMarkers[event], "click");
-}
-
-function highlightMarker(event, action) {
-  if (action) {
-      GEvent.trigger(CrimeMarkers[event], "mouseover");
-  } else {
-      GEvent.trigger(CrimeMarkers[event], "mouseout");
-  }
-}
 */

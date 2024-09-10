@@ -14,8 +14,8 @@ body {
 
 #map {
     height: 100%;
-    float: right;
-    width: 100%;
+    float: left;
+    width: 80%;
 }
 
 .marker p:first-of-type {
@@ -59,53 +59,54 @@ ul {
 }
 */
 #crimeList {
-    font-size: 10px;
-    width: 100%;
-    width: 0px;
+    font-size: 14px;
+    width: 20%;
+    float: right;
+    /* width: 0px; for sliding out from side*/
     height: 100%;
-    overflow-y: scroll;
-    margin: 0 0 0 4px;
+    overflow-y: auto ;
 }
 
 .crimeListDateHeading {
-    margin: 4px 4px 4px 0;
-    font-size: 12px;
-    line-height: 20px;
-    height: 20px;
-    background-color: #074396;
+    background-color: #2b79c2;
     color: #fff;
-    padding: 0;
-    display: block;
+    padding-top: 3px;
+    padding-left: 3px;
+    display: flex;
+    border-bottom: 2px solid #333333;
+    cursor: pointer;
 }
 
-.crimeListDateHeading a {
-    color: #fff;
-    text-decoration: none;
-    display: block;
+.crimeListDateHeading:first-child {
+    border-top: 2px solid #2b79c2;
 }
 
-.crimeListDateHeading a .pmimg {
-    border: 0;
-    margin: 4px 4px 0 4px;
-}
+.triangle {
+    color: #fff;
+    text-shadow: 0 0 20px black;
+    margin-right: 4px;
+  } 
 
 .crimeListDIV {
-    display: inline;
+    display: flex;
+    flex-direction: column;
 }
 
 .listCrime {
     margin-left: 12px;
 }
 
-a.listItem {
-    margin-left: 8px;
+.listItem {
+    padding: 2px 4px;
     text-decoration: none;
     color: #074396;
+    cursor: pointer;
+    font-size: 12px;
+    border-bottom: 1px solid #333333;
 }
 
-a.listItem:hover {
-    text-decoration: underline;
+.listItem:hover {
+    background-color: #074396;
+    color: #fff;
 }
-
-/* DG Upgrade: */
 
