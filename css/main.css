@@ -38,7 +38,13 @@ body {
     display: flex; 
     flex-direction: column;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    width: 42px;
 }
+
+#buttons .btncollapsed {
+    width: 0 !important; /* Target width for animation */
+}
+
 
 #map {
     height: 100%;
@@ -89,12 +95,12 @@ ul {
 }
 
 .crimeListDateHeading {
-    background-color: #3b4651;
+    background-color: #5b5b5b;
     color: #fff;
     padding-top: 3px;
     padding-left: 6px;
     display: flex;
-    border-bottom: 1px solid #3b4651;
+    border-bottom: 1px solid #5b5b5b;
    /* cursor: pointer;*/
     height: 48px;
     align-items: center;
