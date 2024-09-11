@@ -16,9 +16,26 @@ body {
     display: flex;
 }
 
+.symbol {
+    cursor: pointer;
+    font-size: 24px;
+    padding: 10px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.symbol:hover {
+    background-color: #ebebeb;
+}
+
+#buttons {
+    display: flex; 
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
 #map {
     height: 100%;
-    float: left;
+    /*float: right;*/
     /* width: 80%; */
     display: flex;
     flex-grow: 1;
@@ -49,13 +66,15 @@ ul {
 #crimeList {
     font-size: 14px;
     width: 200px;
-    float: right;
-    /* width: 0px; for sliding out from side*/
     height: 100%;
     overflow-y: auto ;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     transition: width 0.5s;
+    white-space: nowrap;
+    box-shadow: rgba(0, 0, 0, 0.3) 2px 0px 4px -1px;
+    z-index: 1;
 }
 
 .collapsed {
@@ -76,11 +95,18 @@ ul {
     border-top: 2px solid #2b79c2;
 }
 
-.triangle {
+.arrow {
     color: #fff;
     text-shadow: 0 0 20px black;
     margin-right: 4px;
-  } 
+
+    display: inline-block;
+    transition: transform 0.3s ease-in-out;
+ } 
+  
+.arrow.rotate {
+    transform: rotate(180deg);
+ }
 
 .crimeListDIV {
     display: flex;

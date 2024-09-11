@@ -11,18 +11,21 @@
     <script type="module" src="./scripts/main.js" defer></script>
     
     <script>
-      function collapseRight() {
+      function showDates(event) {
+        //const arrowRight = String.fromCharCode(9658); // '►'
+        //const arrowLeft = String.fromCharCode(9668);  // '◄'
+
         document.querySelector('#crimeList').classList.toggle('collapsed');
+        //event.innerHTML = (event.innerHTML == arrowRight) ? arrowLeft : arrowRight;        
       }
       </script>
   </head>
   <body>
-    <div style="width: 100px; display: flex; flex-direction: column">
-      <button onclick="showMarker(10)">Show Marker 10</button>
-      <button onclick="removeMarkers()">Remove All</button>
-      <button onclick="collapseRight()" title="toggle" >&#9654;</button>
+    <div id="buttons">
+    <div class="symbol" onclick="showDates()" title="Show Dates">☰</div>
+    <div class="symbol" onclick="showMarker(10)" title="Show Marker 10"><img title="" src="images/siren-over.svg"></div>
     </div>
-    <div id="map">Loading...</div>
+    <div id="map"></div>
     <div id="crimeList"></div>
     <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
         ({key: "AIzaSyB02R4laQio9VntvjvSDk92KsT5PNH15b0", v: "weekly"});</script>

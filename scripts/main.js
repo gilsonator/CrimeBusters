@@ -85,12 +85,13 @@ export async function load() {
 async function initDatesList(dates) {
   const fragment = document.createDocumentFragment();
 
-  // Arrow code: Right arrow: &#9654; Down Arrow: &#9660;
+  /* left arrow  HTML: &#9668; */
+  /* right arrow HTML: &#9658; */
   dates.forEach((date, index) => {
     const dateString = date.DateString;
     const dateHeaderHTML = `
       <div class='crimeListDateHeading' id='heading_${index}'>
-        <span class="triangle">&#9654;</span>${dateString}
+        <span class="arrow">&#9668;</span>${dateString}
       </div>
       <div class='crimeListDIV' id='crimes_${index}'></div>
       `;
