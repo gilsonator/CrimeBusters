@@ -16,6 +16,13 @@ body {
     display: flex;
 }
 
+.noSelect {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Prevent text selection */
+}
+
 .symbol {
     cursor: pointer;
     font-size: 24px;
@@ -82,17 +89,16 @@ ul {
 }
 
 .crimeListDateHeading {
-    background-color: #2b79c2;
+    background-color: #3b4651;
     color: #fff;
     padding-top: 3px;
-    padding-left: 3px;
+    padding-left: 6px;
     display: flex;
-    border-bottom: 2px solid #333333;
-    cursor: pointer;
-}
-
-.crimeListDateHeading:first-child {
-    border-top: 2px solid #2b79c2;
+    border-bottom: 1px solid #3b4651;
+   /* cursor: pointer;*/
+    height: 48px;
+    align-items: center;
+    font-size: 24px;
 }
 
 .arrow {
@@ -120,14 +126,14 @@ ul {
 .listItem {
     padding: 2px 4px;
     text-decoration: none;
-    color: #074396;
+    color: #2b79c2;
     cursor: pointer;
     font-size: 12px;
     border-bottom: 1px solid #333333;
 }
 
 .listItem:hover {
-    background-color: #074396;
+    background-color: #2b79c2;
     color: #fff;
 }
 

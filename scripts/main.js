@@ -88,10 +88,14 @@ async function initDatesList(dates) {
   /* left arrow  HTML: &#9668; */
   /* right arrow HTML: &#9658; */
   dates.forEach((date, index) => {
-    const dateString = date.DateString;
+    const dateString = new Date(date.Date).toLocaleDateString(undefined, {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+  });
     const dateHeaderHTML = `
       <div class='crimeListDateHeading' id='heading_${index}'>
-        <span class="arrow">&#9668;</span>${dateString}
+        ${dateString}
       </div>
       <div class='crimeListDIV' id='crimes_${index}'></div>
       `;
