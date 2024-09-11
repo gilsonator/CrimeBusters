@@ -17,6 +17,8 @@ I created this to outline my skills, ability to upgrade old code without origina
 * Upgrading to latest version of Google Maps API.
 * Upgraded to use HTML5/ES6 Modules.
 
+**No external JavaScript frameworks such as Angular or React where used.**
+
 ### Old Code Written by myself in 2010
 I used multiple resources to find and download the HTML and related `.css`, `.js` as well as related images.
 
