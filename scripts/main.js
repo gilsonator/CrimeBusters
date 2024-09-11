@@ -162,7 +162,7 @@ async function addMarker(eventDetails) {
   const { InfoWindow } = await google.maps.importLibrary('maps');
 
   const defaultIcon = 'images/siren.svg';
-  const hoverIcon = 'images/siren-over.svg';
+  // const hoverIcon = 'images/siren-over.svg';
 
   // DG NOTE: The lat/lng in xml files are off, slighly adjusted based on difference to Google Maps
   const position = {
@@ -202,10 +202,10 @@ async function addMarker(eventDetails) {
     <p>An alleged <b>${eventDetails.type}</b> event occurred at a <b>${eventDetails.location}</b>.</p>
     <p>The perpetrators gained entry by <b>${eventDetails.entry}</b> and stole: ${propertyTakenList}</p>
     <p>Date Reported: <b>${eventDates[selectedDateID].DateString}</b></p>
-    <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(eventDetails.address + ',QLD,Australia')}" tabindex="0">
+    <a target="_blank" z-index="-1" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(eventDetails.address + ',QLD,Australia')}" tabindex="0">
       <span>View on Google Maps</span>
     </a>
-    <p class="marker-note"><b>NOTE:</b> The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred.</p>
+    <p class="marker-note"><b>NOTE:</b> The crime markers do not represent specific addresses, they simply point to the area around where acussed crime occured.</p>
   </div>
 `;
   const infoWindow = new InfoWindow({
