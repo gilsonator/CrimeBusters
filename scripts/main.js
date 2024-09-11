@@ -62,6 +62,7 @@ export async function load() {
 
       // TEMP DG::: function addToList(event, location, propertyTaken) {
         const tempDiv = document.createElement('div');
+        tempDiv.title = "Show the location."
         tempDiv.innerHTML = formatString(event.address);
         tempDiv.className = 'listItem';
         tempDiv.setAttribute('data-id', eventCount++);
@@ -85,8 +86,6 @@ export async function load() {
 async function initDatesList(dates) {
   const fragment = document.createDocumentFragment();
 
-  /* left arrow  HTML: &#9668; */
-  /* right arrow HTML: &#9658; */
   dates.forEach((date, index) => {
     const dateString = new Date(date.Date).toLocaleDateString(undefined, {
       day: '2-digit',
@@ -163,7 +162,7 @@ async function addMarker(eventDetails) {
   const { InfoWindow } = await google.maps.importLibrary('maps');
 
   const defaultIcon = 'images/siren.svg';
-  // const hoverIcon = 'images/siren-over.svg';
+  const hoverIcon = 'images/siren-over.svg';
 
   // DG NOTE: The lat/lng in xml files are off, slighly adjusted based on difference to Google Maps
   const position = {
@@ -214,6 +213,8 @@ async function addMarker(eventDetails) {
   });
 
   infoWindow.setHeaderContent(formatString(eventDetails.address));
+
+
 
   // Add a click event listener to the marker
   marker.addListener('click', () => {
