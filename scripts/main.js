@@ -263,7 +263,6 @@ export function removeMarkers() {
 }
 
 export function showMarker(marker) {
-  //google.maps.event.trigger(marker, 'click');
   google.maps.event.trigger(currentMarkers[marker], 'click');
 }
 
@@ -271,58 +270,3 @@ export function showMarker(marker) {
 window.onload = load;
 window.removeMarkers = removeMarkers;
 window.showMarker = showMarker;
-
-///// OLD CODE: ////////////////////////
-/*
-var crimeFiles = [];
-
-function datesDownloadComplete(xml) {
-    var eventsXML = GXml.parse(xml);
-    try {
-        var dates = eventsXML.documentElement.getElementsByTagName("date");
-    } catch (ex) {
-        return;
-    }
-    for (var index = 0; index < dates.length; index++) {
-        var dateString = dates[index].getAttribute("DateString");
-        var dateHeaderHTML = "<div class='crimeListDateHeading' id='heading_" + index + "'><a href='#' onclick='loadMarkers(" + index + "); return false'><img src='images/plus.gif' class='pmimg' id='pmimg_" + index + "' width=11 height=11 ></a></div>";
-        dateHeaderHTML += "<div class='crimeListDIV' id='crimes_" + index + "'></div>";
-        document.getElementById("crimeList").innerHTML += dateHeaderHTML;
-        crimeFiles.push("xml/" + dates[index].getAttribute("File"));
-    }
-    document.getElementById("crimeList").innerHTML += " ";
-    selectedDateID = null;
-    loadParseEvents(0);
-}
-
-function downloadComplete66(xml) {
-  var eventsXML = GXml.parse(xml);
-
-  try {
-      var addresses = eventsXML.documentElement.getElementsByTagName("address");
-  } catch (ex) {
-      return;
-  }
-
-  var tmp = [];
-  document.getElementById("marker" + selectedDateID).src = "type";
-
-  for (var index = 0; index < addresses.length; index++) {
-
-
-  CrimeMarkers = crimeMarkers;
-  mgr.refresh(tmp, 1);
-  mgr.scrollTop();
-  document.getElementById("crimeList").scrollTop = document.getElementById("pmimg_" + selectedDateID).offsetTop - 4;
-}
-
-function addToList(event, location, propertyTaken) {
-  var markerDiv = "<div><a class='listItem' href='#' onmouseover='highlightMarker(" + event + ",true);' ";
-  markerDiv += "onmouseout='highlightMarker(" + event + ",false);' ";
-  markerDiv += "onclick='showMarker(" + event + "); return false'>" + location + "</a></div>";
-  document.getElementById("pmimg_" + selectedDateID).innerHTML += markerDiv;
-}
-
-
-
-*/
