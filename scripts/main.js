@@ -47,7 +47,7 @@ export async function load() {
     if (eventDates.length > 0) {
       await initDatesList(eventDates);
       // const events = await parser.loadParseEventsXML(eventDates[0].FileName);
-      // TODO: Loading first is temp... 
+      // TODO: Loading first is temp...
       const events = await parser.loadXMLParseElement(
         xmlPath + eventDates[0].File,
         'marker'
@@ -60,20 +60,22 @@ export async function load() {
       events.forEach(event => {
         addMarker(event); // Adding the first markers on first date
 
-      // TEMP DG::: function addToList(event, location, propertyTaken) {
+        // TEMP DG::: function addToList(event, location, propertyTaken) {
         const tempDiv = document.createElement('div');
-        tempDiv.title = "Show the location."
+        tempDiv.title = 'Show the location.';
         tempDiv.innerHTML = formatString(event.address);
         tempDiv.className = 'listItem';
         tempDiv.setAttribute('data-id', eventCount++);
-        tempDiv.addEventListener('click', (event) => {
+        tempDiv.addEventListener('click', event => {
           // loadMarkers(index);
-          console.log ('Address clicked:', event.target.innerHTML);
+          console.log('Address clicked:', event.target.innerHTML);
           showMarker(event.target.dataset.id);
           return false;
         });
-        document.getElementById("crimes_" + selectedDateID).appendChild (tempDiv);
-      //}
+        document
+          .getElementById('crimes_' + selectedDateID)
+          .appendChild(tempDiv);
+        //}
       });
     } else {
       console.error('No event dates found.');
@@ -90,8 +92,8 @@ async function initDatesList(dates) {
     const dateString = new Date(date.Date).toLocaleDateString(undefined, {
       day: '2-digit',
       month: 'long',
-      year: 'numeric'
-  });
+      year: 'numeric',
+    });
     const dateHeaderHTML = `
       <div class='crimeListDateHeading' id='heading_${index}'>
         ${dateString}
@@ -109,11 +111,13 @@ async function initDatesList(dates) {
   document.getElementById('crimeList').appendChild(fragment);
 
   dates.forEach((date, index) => {
-    document.getElementById(`heading_${index}`).addEventListener('click', () => {
-      // loadMarkers(index);
-      console.log ('Date Heading clicked:', date);
-      return false;
-    });
+    document
+      .getElementById(`heading_${index}`)
+      .addEventListener('click', () => {
+        // loadMarkers(index);
+        console.log('Date Heading clicked:', date);
+        return false;
+      });
   });
 }
 
@@ -213,8 +217,6 @@ async function addMarker(eventDetails) {
   });
 
   infoWindow.setHeaderContent(formatString(eventDetails.address));
-
-
 
   // Add a click event listener to the marker
   marker.addListener('click', () => {

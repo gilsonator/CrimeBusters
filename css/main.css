@@ -13,133 +13,130 @@ body {
 }
 
 body {
-    display: flex;
+  display: flex;
 }
 
 .noSelect {
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Prevent text selection */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Prevent text selection */
 }
 
 .symbol {
-    cursor: pointer;
-    font-size: 24px;
-    padding: 10px;
-    border-bottom: 1px solid #ebebeb;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 10px;
+  border-bottom: 1px solid #ebebeb;
 }
 
 .symbol:hover {
-    background-color: #ebebeb;
+  background-color: #ebebeb;
 }
 
 #buttons {
-    display: flex; 
-    flex-direction: column;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
-    width: 42px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+  width: 42px;
 }
 
 #buttons .btncollapsed {
-    width: 0 !important; /* Target width for animation */
+  width: 0 !important; /* Target width for animation */
 }
 
-
 #map {
-    height: 100%;
-    /*float: right;*/
-    /* width: 80%; */
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
+  height: 100%;
+  /*float: right;*/
+  /* width: 80%; */
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
 }
 
 .marker p:first-of-type {
-    margin-top: 10px;
-    font-size: 14px;
+  margin-top: 10px;
+  font-size: 14px;
 }
 
 .marker-note {
-    font-size: 10px;
-    color: dimgray
+  font-size: 10px;
+  color: dimgray;
 }
 
 ul {
-    padding-inline-start: 30px;
+  padding-inline-start: 30px;
 }
 
 /* DG: Bit of a hack, does change all headers! */
-.gm-style-iw-ch
-{
-    font-weight: bold;
-    font-size: 20px;
+.gm-style-iw-ch {
+  font-weight: bold;
+  font-size: 20px;
 }
 
 #crimeList {
-    font-size: 14px;
-    width: 200px;
-    height: 100%;
-    overflow-y: auto ;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: width 0.5s;
-    white-space: nowrap;
-    box-shadow: rgba(0, 0, 0, 0.3) 2px 0px 4px -1px;
-    z-index: 1;
+  font-size: 14px;
+  width: 200px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.5s;
+  white-space: nowrap;
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 0px 4px -1px;
+  z-index: 1;
 }
 
 .collapsed {
-    width: 0 !important; /* Target width for animation */
+  width: 0 !important; /* Target width for animation */
 }
 
 .crimeListDateHeading {
-    background-color: #5b5b5b;
-    color: #fff;
-    padding-top: 3px;
-    padding-left: 6px;
-    display: flex;
-    border-bottom: 1px solid #5b5b5b;
-   /* cursor: pointer;*/
-    height: 48px;
-    align-items: center;
-    font-size: 24px;
+  background-color: #5b5b5b;
+  color: #fff;
+  padding-top: 3px;
+  padding-left: 6px;
+  display: flex;
+  border-bottom: 1px solid #5b5b5b;
+  /* cursor: pointer;*/
+  height: 48px;
+  align-items: center;
+  font-size: 24px;
 }
 
 .arrow {
-    color: #fff;
-    text-shadow: 0 0 20px black;
-    margin-right: 4px;
+  color: #fff;
+  text-shadow: 0 0 20px black;
+  margin-right: 4px;
 
-    display: inline-block;
-    transition: transform 0.3s ease-in-out;
- } 
-  
+  display: inline-block;
+  transition: transform 0.3s ease-in-out;
+}
+
 .arrow.rotate {
-    transform: rotate(180deg);
- }
+  transform: rotate(180deg);
+}
 
 .crimeListDIV {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .listCrime {
-    margin-left: 12px;
+  margin-left: 12px;
 }
 
 .listItem {
-    padding: 2px 4px;
-    text-decoration: none;
-    color: #2b79c2;
-    cursor: pointer;
-    font-size: 12px;
-    border-bottom: 1px solid #333333;
+  padding: 2px 4px;
+  text-decoration: none;
+  color: #2b79c2;
+  cursor: pointer;
+  font-size: 12px;
+  border-bottom: 1px solid #333333;
 }
 
 .listItem:hover {
-    background-color: #2b79c2;
-    color: #fff;
+  background-color: #2b79c2;
+  color: #fff;
 }
-
