@@ -92,6 +92,10 @@ ul {
   width: 0 !important; /* Target width for animation */
 }
 
+.selected {
+  background-color: #d4d4d4;
+}
+
 .crimeListDateHeading {
   background-color: #5b5b5b;
   color: #fff;
@@ -135,8 +139,9 @@ ul {
   font-size: 12px;
   border-bottom: 1px solid #333333;
 }
-
-.listItem:hover {
+.listItem:active,
+.listItem:hover,
+.listItem:focus {
   background-color: #2b79c2;
   color: #fff;
 }

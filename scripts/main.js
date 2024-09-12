@@ -20,6 +20,7 @@ let currentMarkers = [];
 let currentMarkerSelected;
 let lastOpenedInfoWindow;
 let currentCircle;
+let lastEventHighlighted
 
 const xmlPath = 'xml/';
 const datesXMLFile = 'dates.xml';
@@ -43,7 +44,7 @@ export async function load() {
     // const dates = await parser.loadParseDatesXML(datesXMLFile);
     console.log('Parsed Dates:', dates);
     eventDates = dates;
-
+;
     if (eventDates.length > 0) {
       await initDatesList(eventDates);
       // const events = await parser.loadParseEventsXML(eventDates[0].FileName);
@@ -57,25 +58,31 @@ export async function load() {
       // TODO: Make sure to save loaded ents for dates, only load if not done already
       selectedDateID = 0;
       let eventCount = 0;
+
       events.forEach(event => {
         addMarker(event); // Adding the first markers on first date
 
         // TEMP DG::: function addToList(event, location, propertyTaken) {
         const tempDiv = document.createElement('div');
+        tempDiv.setAttribute('tabindex', eventCount);
         tempDiv.title = 'Show the location.';
         tempDiv.innerHTML = formatString(event.address);
         tempDiv.className = 'listItem';
-        tempDiv.setAttribute('data-id', eventCount++);
+        tempDiv.setAttribute('data-id', eventCount);
         tempDiv.addEventListener('click', event => {
           // loadMarkers(index);
           console.log('Address clicked:', event.target.innerHTML);
           showMarker(event.target.dataset.id);
+          event.target.classList.toggle('selected');
+          if (lastEventHighlighted) { lastEventHighlighted.target.classList.toggle('selected'); }
+          lastEventHighlighted = event
           return false;
         });
         document
           .getElementById('crimes_' + selectedDateID)
           .appendChild(tempDiv);
         //}
+        eventCount++;
       });
     } else {
       console.error('No event dates found.');
@@ -93,7 +100,7 @@ async function initDatesList(dates) {
       day: '2-digit',
       month: 'long',
       year: 'numeric',
-    });
+    }); // click show highlight
     const dateHeaderHTML = `
       <div class='crimeListDateHeading' id='heading_${index}'>
         ${dateString}
