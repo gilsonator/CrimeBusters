@@ -64,17 +64,18 @@ This was the application, using an `<IFRAME>` running on web browser:
 
 The `<IFRAME>` source. Not all images downloaded and Google Maps outdated:
 
-![Wayback Machine IFRAM](examples/website-iframe.png)
+![Wayback Machine IFRAME](examples/website-iframe.png)
 
 New version in browser:
 
-![This version](examples/updated.png)
+![This version](examples/Screenshot_2024-09-14-192746.png)
 
-Running on Android mobile phone:
+![This version](examples/Screenshot_2024-09-14-192904.png)
 
-Running full screen:
 
-<img src="examples/Screenshot_20240908_160740_Edge.jpg" width="40%" />
+Running on Android mobile phone, in full screen:
+
+<img src="examples/Screenshot_20240908_160740_Edge.jpg" width="60%" />
 
 ## Installation
 
