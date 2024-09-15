@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dates>
-  <date DateString="Monday, 1st July 2013" Date="2013-07-01T00:00:00" File="crimes_01-07-13.xml" />
-</dates>
+  <date dateString="Monday, 1st July 2013" dateReported="2013-07-01T00:00:00" eventDetailsXML="crimes_01-07-13.xml" />
+</dates> 
