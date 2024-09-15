@@ -3,11 +3,11 @@ This is an upgrade of code I developed to show maps of crimes reported to police
 
 **Note: the code is no longer in use, and the crime accusations are old.**
 
-> A first in Australia!
-
 Back in the day, we worked with Queensland Police to send daily reports, In another stand alone application, I created `.xml` files based on dates of reports. 
 
-They were uploaded to our website and this application was used.
+This application was used to show reported events as markers using Google Maps API.
+
+> A first in Australia!
 
 ## Notes
 I created this to outline my skills, ability to upgrade old code without original source:
@@ -16,6 +16,7 @@ I created this to outline my skills, ability to upgrade old code without origina
 * I un-obfuscated my original code downloaded from Wayback Machine.
 * Upgrading to latest version of Google Maps API.
 * Upgraded to use HTML5/ES6 Modules.
+* Uses the Haversine formula to calculate the distance between two points on the Earth’s surface, sorts events listed, based on distance from map center. https://en.wikipedia.org/wiki/Haversine_formula
 
 **No external JavaScript frameworks such as Angular or React where used.**
 
@@ -77,7 +78,7 @@ New version in browser:
 
 Running on Android mobile phone, in full screen:
 
-<img src="examples/Screenshot_20240908_160740_Edge.jpg" width="60%" />
+<img src="examples/Screenshot_20240908_160740_Edge.jpg" width="40%" />
 
 ## Installation
 
