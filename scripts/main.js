@@ -50,7 +50,7 @@ export async function load() {
       // const events = await parser.loadParseEventsXML(eventDates[0].FileName);
       // TODO: Loading first is temp...
       const events = await parser.loadXMLParseElement(
-        xmlPath + eventDates[0].File,
+        xmlPath + eventDates[0].eventDetailsXML,
         'marker'
       );
       console.log('Parsed Events:', events);
@@ -96,7 +96,7 @@ async function initDatesList(dates) {
   const fragment = document.createDocumentFragment();
 
   dates.forEach((date, index) => {
-    const dateString = new Date(date.Date).toLocaleDateString(undefined, {
+    const dateString = new Date(date.dateReported).toLocaleDateString(undefined, {
       day: '2-digit',
       month: 'long',
       year: 'numeric',
@@ -177,8 +177,8 @@ async function addMarker(eventDetails) {
 
   // DG NOTE: The lat/lng in xml files are off, slighly adjusted based on difference to Google Maps
   const position = {
-    lat: parseFloat(eventDetails.lat) + 0.002453,
-    lng: parseFloat(eventDetails.lng) + 0.0019799,
+    lat: (parseFloat(eventDetails.lat) || 0) + 0.002453,
+    lng: (parseFloat(eventDetails.lng) || 0) + 0.0019799,
   };
   const icon = document.createElement('img');
   icon.width = 24;
@@ -212,7 +212,7 @@ async function addMarker(eventDetails) {
   <div class='marker' data-id='${currentMarkers.length}'>
     <p>An alleged <b>${eventDetails.type}</b> event occurred at a <b>${eventDetails.location}</b>.</p>
     <p>The perpetrators gained entry by <b>${eventDetails.entry}</b> and stole: ${propertyTakenList}</p>
-    <p>Date Reported: <b>${eventDates[selectedDateID].DateString}</b></p>
+    <p>Date Reported: <b>${eventDates[selectedDateID].dateString}</b></p>
     <a target="_blank" z-index="-1" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(eventDetails.address + ',QLD,Australia')}" tabindex="0">
       <span>View on Google Maps</span>
     </a>
@@ -266,7 +266,16 @@ export function showMarker(marker) {
   google.maps.event.trigger(currentMarkers[marker], 'click');
 }
 
+export function showRndMarker() {
+  const count = currentMarkers.length;
+  const randomIndex = Math.floor(Math.random() * count);
+
+  google.maps.event.trigger(currentMarkers[randomIndex], 'click');
+  console.log ('Random Idx: ', randomIndex);
+}
+
 // Attach the functions to the window object
 window.onload = load;
 window.removeMarkers = removeMarkers;
 window.showMarker = showMarker;
+window.showRndMarker = showRndMarker;
