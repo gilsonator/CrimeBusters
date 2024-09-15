@@ -21,6 +21,7 @@ let currentMarkerSelected;
 let lastOpenedInfoWindow;
 let currentCircle;
 let lastEventHighlighted;
+let loadingIndicator;
 
 // Location set to Townsville City
 // const centerPosition = { lat: -19.285221, lng: 146.773911 };
@@ -167,8 +168,9 @@ async function initDatesList(dates) {
 }
 
 async function initMap(date) {
-  // Request needed libraries.
-  //@ts-ignore
+  loadingIndicator = document.getElementById('loading');
+  loadingIndicator.style.display = 'block';
+
   const { Map } = await google.maps.importLibrary('maps');
 
   map = new Map(document.getElementById('map'), {
@@ -196,10 +198,49 @@ async function initMap(date) {
     }
     console.log('Current Zoom level: ', zoom);
   }
-
-  // Add event listener for zoom changes
   map.addListener('zoom_changed', checkZoomLevel);
 
+  // Only show button if secure, or it will fail.
+  if (window.isSecureContext && navigator.geolocation) {
+    let userLocation;
+    // Create a button element
+    var button = document.createElement('button');
+    button.textContent = 'Center Map on My Location';
+    button.classList.add('custom-map-control-button');
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(button);
+
+    // Add click event listener to the button
+    button.addEventListener('click', () => {
+      loadingIndicator.style.display = 'block';
+      if (userLocation === undefined) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            userLocation = new google.maps.LatLng(
+              position.coords.latitude,
+              position.coords.longitude
+            );
+            // Wait and set
+            map.panTo(userLocation);
+            map.setZoom(17);
+            loadingIndicator.style.display = 'none';
+          },
+          error => {
+            alert('Geolocation failed!');
+            console.error('GeolocationPositionError:', error);
+            loadingIndicator.style.display = 'none';
+          }
+
+        );
+      } else {
+          // Already defined
+          map.panTo(userLocation);
+          map.setZoom(17);
+          loadingIndicator.style.display = 'none';
+      }
+    });
+  }
+
+  loadingIndicator.style.display = 'none';
   return map;
 }
 

@@ -145,3 +145,28 @@ ul {
   background-color: #2b79c2;
   color: #fff;
 }
+
+.custom-map-control-button {
+  background-color: #fff;
+  border: 0;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.3);
+  cursor: pointer;
+  margin: 10px;
+  padding: 12px;
+  text-align: center;
+  height: 40px;
+  font-family: 'Roboto', Arial, sans-serif;
+} 
+
+#loading {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.3);
+}
