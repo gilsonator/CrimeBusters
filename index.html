@@ -3,10 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      http-equiv="Cache-Control"
-      content="no-cache, no-store, must-revalidate"
-    />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
 
@@ -30,25 +27,24 @@
         //event.innerHTML = (event.innerHTML == arrowRight) ? arrowLeft : arrowRight;
       }
 
-      function onDateClick (date) {
-        
-      }
+      function onDateClick(date) {}
     </script>
+    <style>
+      #rndBtn {
+        padding: 6px;
+      }
+
+      #rndBtn img {
+        width: 30px;
+        height: 30px;
+      }
+    </style>
   </head>
   <body>
     <div id="buttons" class="noSelect">
       <div class="symbol" onclick="showDates()" title="Dates">☰</div>
-      <div
-        class="symbol"
-        style="padding: 6px"
-        onclick="showRndMarker()"
-        title="Show a Random Marker"
-      >
-        <img
-          style="width: 30px; height: 30px"
-          title="Show a Random Marker"
-          src="images/siren-over.svg"
-        />
+      <div id="rndBtn" class="symbol" onclick="showRndMarker()" title="Show a Random Marker">
+        <img title="Show a Random Marker" src="images/siren-over.svg" />
       </div>
     </div>
     <div id="crimeList" class="noSelect collapsed"></div>
