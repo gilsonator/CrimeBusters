@@ -25,6 +25,8 @@ I used multiple resources to find and download the HTML and related `.css`, `.js
 Ended up directly downloading the code, removing Wayback Machine code and links:
 <https://web.archive.org/web/*/http://static.townsvillebulletin.com.au/crimebusters/*>
 
+![Wayback Machine URLs Download](examples/WaybackMachineDownload.png)
+
 For Specific Date:
 <https://web.archive.org/web/20111213050643if_/http://static.townsvillebulletin.com.au/crimebusters/#>
 
