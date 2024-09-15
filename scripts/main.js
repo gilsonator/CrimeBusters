@@ -20,15 +20,50 @@ let currentMarkers = [];
 let currentMarkerSelected;
 let lastOpenedInfoWindow;
 let currentCircle;
-let lastEventHighlighted
+let lastEventHighlighted;
+
+// Location set to Townsville City
+// const centerPosition = { lat: -19.285221, lng: 146.773911 };
+const centerPosition = { lat: -19.26292105376137, lng: 146.74627617238946 };
 
 const xmlPath = 'xml/';
 const datesXMLFile = 'dates.xml';
 
+/**
+ * Formats a string so that the first letter of each word is capitalized.
+ *
+ * @param {string} str - The input string to be formatted.
+ * @returns {string} - The formatted string with each word capitalized.
+ */
 function formatString(str) {
+  // Regular expression (\b\w) to find the first letter of each word.
+  // The \b is a word boundary, and \w matches any word character (equivalent to [a-zA-Z0-9_])
   return str.toLowerCase().replace(/\b\w/g, function (char) {
     return char.toUpperCase();
   });
+}
+
+/**
+ * Uses the Haversine formula to calculate the distance between two points on the Earth’s surface.
+ * https://en.wikipedia.org/wiki/Haversine_formula
+ *
+ * @param {number} lat1 - Latitude of the first point in degrees.
+ * @param {number} lng1 - Longitude of the first point in degrees.
+ * @param {number} lat2 - Latitude of the second point in degrees.
+ * @param {number} lng2 - Longitude of the second point in degrees.
+ * @returns {number} - Distance between the two points in kilometers.
+ */
+function haversineDistanceKm(lat1, lng1, lat2, lng2) {
+  const toRad = x => (x * Math.PI) / 180;
+  const R = 6371; // Radius of the Earth in kilometers
+
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lng2 - lng1);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c; // Distance in kilometers
 }
 
 export async function load() {
@@ -36,15 +71,11 @@ export async function load() {
 
   try {
     const parser = new XMLParser();
-    const dates = await parser.loadXMLParseElement(
-      xmlPath + datesXMLFile,
-      'date'
-    );
+    const dates = await parser.loadXMLParseElement(xmlPath + datesXMLFile, 'date');
 
     // const dates = await parser.loadParseDatesXML(datesXMLFile);
     console.log('Parsed Dates:', dates);
     eventDates = dates;
-;
     if (eventDates.length > 0) {
       await initDatesList(eventDates);
       // const events = await parser.loadParseEventsXML(eventDates[0].FileName);
@@ -54,6 +85,15 @@ export async function load() {
         'marker'
       );
       console.log('Parsed Events:', events);
+
+      // sort by distance from map default centre.
+      events.sort((a, b) => {
+        const distanceA = haversineDistanceKm(centerPosition.lat, centerPosition.lng, a.lat, a.lng);
+        const distanceB = haversineDistanceKm(centerPosition.lat, centerPosition.lng, b.lat, b.lng);
+        return distanceA - distanceB;
+      });
+
+      console.log(events);
 
       // TODO: Make sure to save loaded ents for dates, only load if not done already
       selectedDateID = 0;
@@ -74,13 +114,13 @@ export async function load() {
           console.log('Address clicked:', event.target.innerHTML);
           showMarker(event.target.dataset.id);
           event.target.classList.toggle('selected');
-          if (lastEventHighlighted) { lastEventHighlighted.target.classList.toggle('selected'); }
-          lastEventHighlighted = event
+          if (lastEventHighlighted) {
+            lastEventHighlighted.target.classList.toggle('selected');
+          }
+          lastEventHighlighted = event;
           return false;
         });
-        document
-          .getElementById('crimes_' + selectedDateID)
-          .appendChild(tempDiv);
+        document.getElementById('crimes_' + selectedDateID).appendChild(tempDiv);
         //}
         eventCount++;
       });
@@ -118,19 +158,15 @@ async function initDatesList(dates) {
   document.getElementById('crimeList').appendChild(fragment);
 
   dates.forEach((date, index) => {
-    document
-      .getElementById(`heading_${index}`)
-      .addEventListener('click', () => {
-        // loadMarkers(index);
-        console.log('Date Heading clicked:', date);
-        return false;
-      });
+    document.getElementById(`heading_${index}`).addEventListener('click', () => {
+      // loadMarkers(index);
+      console.log('Date Heading clicked:', date);
+      return false;
+    });
   });
 }
 
 async function initMap(date) {
-  // Location set to Townsville City
-  const centerPosition = { lat: -19.285221, lng: 146.773911 };
   // Request needed libraries.
   //@ts-ignore
   const { Map } = await google.maps.importLibrary('maps');
@@ -158,7 +194,7 @@ async function initMap(date) {
     } else {
       currentCircle.setMap(null);
     }
-    console.log('Current Zoom level: ' + zoom);
+    console.log('Current Zoom level: ', zoom);
   }
 
   // Add event listener for zoom changes
@@ -168,8 +204,7 @@ async function initMap(date) {
 }
 
 async function addMarker(eventDetails) {
-  const { AdvancedMarkerElement, PinElement } =
-    await google.maps.importLibrary('marker');
+  const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary('marker');
   const { InfoWindow } = await google.maps.importLibrary('maps');
 
   const defaultIcon = 'images/siren.svg';
@@ -268,10 +303,24 @@ export function showMarker(marker) {
 
 export function showRndMarker() {
   const count = currentMarkers.length;
-  const randomIndex = Math.floor(Math.random() * count);
 
-  google.maps.event.trigger(currentMarkers[randomIndex], 'click');
-  console.log ('Random Idx: ', randomIndex);
+  if (count === 0) {
+    console.log('No markers available.');
+    return;
+  }
+
+  const randomBuffer = new Uint32Array(1);
+  window.crypto.getRandomValues(randomBuffer);
+  const randomIndex = randomBuffer[0] % count;
+
+  const marker = currentMarkers[randomIndex];
+
+  if (marker) {
+    google.maps.event.trigger(marker, 'click');
+    console.log('Random Idx: ', randomIndex);
+  } else {
+    console.log('Marker at random index is undefined or null.');
+  }
 }
 
 // Attach the functions to the window object
