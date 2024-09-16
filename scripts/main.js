@@ -336,7 +336,7 @@ async function addMarker(eventDetails) {
     }
 
     currentCircle.setCenter(position);
-    map.panTo(position);
+    // map.panTo(position);
     currentMarkerSelected = marker;
   });
 
