@@ -42,10 +42,12 @@
   </head>
   <body>
     <div id="buttons" class="noSelect">
-      <div class="symbol" onclick="showDates()" title="Dates">☰</div>
+      <div class="symbol" onclick="showDates()" title="Show Events">☰</div>
       <div id="rndBtn" class="symbol" onclick="showRndMarker()" title="Show a Random Marker">
         <img title="Show a Random Marker" src="images/siren-over.svg" />
       </div>
+      <div class="symbol" onclick="location.reload()" title="Reload"
+      style="padding-left: 6px; font-size: 20px">&#x1f504;</div>
     </div>
     <div id="crimeList" class="noSelect collapsed"></div>
     <div id="map"></div>
