@@ -24,9 +24,9 @@ let lastEventHighlighted;
 let loadingIndicator;
 
 // Location set to Townsville City
-// const centerPosition = { lat: -19.285221, lng: 146.773911 };
-const centerPosition = { lat: -19.26292105376137, lng: 146.74627617238946 };
+// https://www.latlong.net/place/townsville-city-qld-australia-23743.html
 
+const centerPosition = { lat: -19.258965, lng: 146.816956 };
 const xmlPath = 'xml/';
 const datesXMLFile = 'dates.xml';
 
@@ -87,14 +87,30 @@ export async function load() {
       );
       console.log('Parsed Events:', events);
 
-      // sort by distance from map default centre.
+      // sort by distance from map default center.
       events.sort((a, b) => {
-        const distanceA = haversineDistanceKm(centerPosition.lat, centerPosition.lng, a.lat, a.lng);
-        const distanceB = haversineDistanceKm(centerPosition.lat, centerPosition.lng, b.lat, b.lng);
+        const distanceA = haversineDistanceKm(
+          centerPosition.lat,
+          centerPosition.lng,
+          parseFloat(a.lat) || 0,
+          parseFloat(a.lng) || 0
+        );
+        const distanceB = haversineDistanceKm(
+          centerPosition.lat,
+          centerPosition.lng,
+          parseFloat(b.lat) || 0,
+          parseFloat(b.lng) || 0
+        );
+
+        // Save the distances in the event objects
+        a.distance = distanceA;
+        b.distance = distanceB;
+
+        // Sort based on the distances
         return distanceA - distanceB;
       });
 
-      console.log(events);
+      console.log('Sorted by distance:', events);
 
       // TODO: Make sure to save loaded ents for dates, only load if not done already
       selectedDateID = 0;
@@ -110,6 +126,7 @@ export async function load() {
         tempDiv.innerHTML = formatString(event.address);
         tempDiv.className = 'listItem';
         tempDiv.setAttribute('data-id', eventCount);
+        tempDiv.setAttribute('data-distance', event.distance);
         tempDiv.addEventListener('click', event => {
           // loadMarkers(index);
           console.log('Address clicked:', event.target.innerHTML);
@@ -200,8 +217,9 @@ async function initMap(date) {
   }
   map.addListener('zoom_changed', checkZoomLevel);
 
-  // Only show button if secure, or it will fail.
-  if (window.isSecureContext && navigator.geolocation) {
+  // Only show button if secure, or it will fail. 
+  // NOTE: 0 && is for debug
+  if (0 && window.isSecureContext && navigator.geolocation) {
     let userLocation;
     // Create a button element
     var button = document.createElement('button');
@@ -210,7 +228,8 @@ async function initMap(date) {
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(button);
 
     // Add click event listener to the button
-    button.addEventListener('click', () => {
+    button.addEventListener('click', event => {
+      // if (event.ctrlKey) {
       loadingIndicator.style.display = 'block';
       if (userLocation === undefined) {
         navigator.geolocation.getCurrentPosition(
@@ -229,13 +248,12 @@ async function initMap(date) {
             console.error('GeolocationPositionError:', error);
             loadingIndicator.style.display = 'none';
           }
-
         );
       } else {
-          // Already defined
-          map.panTo(userLocation);
-          map.setZoom(17);
-          loadingIndicator.style.display = 'none';
+        // Already defined
+        map.panTo(userLocation);
+        map.setZoom(17);
+        loadingIndicator.style.display = 'none';
       }
     });
   }

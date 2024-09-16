@@ -73,6 +73,7 @@ ul {
   font-weight: bold;
   font-size: 20px;
 }
+/* --- */
 
 #crimeList {
   font-size: 14px;
@@ -138,6 +139,9 @@ ul {
   cursor: pointer;
   font-size: 12px;
   border-bottom: 1px solid #333333;
+  white-space: nowrap; /* Prevents the text from wrapping to the next line */
+  overflow: hidden; /* Hides the overflowed text */
+  text-overflow: ellipsis; /* Adds the ellipsis (...) */
 }
 .listItem:active,
 .listItem:hover,
