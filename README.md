@@ -62,6 +62,7 @@ wget -i out.json
 > Source: https://github.com/hartator/wayback-machine-downloader
 
 ## Examples:
+### IFRAME
 
 This was the application, using an `<IFRAME>` running on web browser:
 
@@ -71,17 +72,20 @@ The `<IFRAME>` source. Not all images downloaded and Google Maps outdated:
 
 ![Wayback Machine IFRAME](examples/website-iframe.png)
 
-New version in browser:
+### New version in browser:
 
 ![This version](examples/Screenshot_2024-09-14-192746.png)
 
 ![This version](examples/Screenshot_2024-09-14-192904.png)
 
-
 Running on Android mobile phone, in full screen:
 
 <img src="examples/Screenshot_20240908_160740_Edge.jpg" width="40%" />
 
+### Old website example
+Using a screenshot of the old website, used it as a background and added `<IFRAME>` using new version.
+
+![Old Bully Website](examples/bullywebsiteupgrade.png)
 ## Installation
 
 To get started with this project, you'll need to have Node.js and npm installed on your machine.
