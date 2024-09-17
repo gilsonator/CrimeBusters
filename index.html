@@ -34,8 +34,8 @@
         margin: 0;
         font-family: 'Courier New', Courier, monospace;
         white-space: break-spaces;
-        color: rgb(112 170 255);
-        background-color: #242424;
+        color: #05f13c;
+        background-color: #171717;
         border-radius: 6px;
       }
     </style>
@@ -45,11 +45,11 @@
     <p><i>Created by David Gilson.</i></p>
     <p>
       This is an upgrade of code I developed to show maps of crimes reported to police. This was
-      used in local news paper website.
+      used in local newspaper website.
     </p>
     <p>
-      Back in the day, we worked with Queensland Police to send daily reports, In another stand
-      alone application, I created `.xml` files based on dates of reports.
+      Back in the day, we worked with Queensland Police Service to send reports, In another application, I imported report files, 
+      and created <code class="html">crimes_{dd-mm-yy}.xml</code> files based on dates of reports.
     </p>
     <p>
       This application was used to show reported events as markers using Google Maps API.</p>
@@ -76,8 +76,8 @@
       <li>Upgrading to latest version of Google Maps API.</li>
       <li>Upgraded to use HTML5/ES6 Modules.</li>
       <li>
-        Uses the Haversine formula to calculate the distance between two points on the Earth’s
-        surface, sorts events listed, based on distance from map center.<br />
+        Uses the <i>Haversine formula</i> to calculate the distance between two points on the Earth’s
+        surface, then sorts events based on distance from map center.<br />
         <a href="https://en.wikipedia.org/wiki/Haversine_formula"
         target="_blank"
         rel="noopener"
@@ -85,12 +85,12 @@
         https://en.wikipedia.org/wiki/Haversine_formula
         </a>
       </li>
-      <li><b>No external JavaScript frameworks such as Angular or React where used.</b></li>
+      <li><b>No external JavaScript frameworks, such as Angular or React, were used.</b></li>
     </ul>
-    <p>Here is reference to Wayback Machine Archive of Website, using Code Written by myself in 2010:<br>
+    <p>Here is reference to Wayback Machine Archive of Website, developed by me in 2012:<br>
       <a
         href="https://web.archive.org/web/20120224161647/http://www.townsvillebulletin.com.au/crimebusters/"
-        target="_blank" rel="noopener"
+        target="_blank" rel="noopener" title="https://web.archive.org/web/20120224161647/http://www.townsvillebulletin.com.au/crimebusters/"
         >Crimebusters | Townsville Bulletin - Townsville, North QLD, Australia</a
       >
     </p>
