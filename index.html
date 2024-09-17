@@ -24,7 +24,7 @@
         margin-block-end: -0.1em;
       }
       h1 {
-        margin-block-end: 0.3em;
+        margin: 0;
       }
       h2 {
         margin-block-end: -0.1em;
@@ -38,83 +38,120 @@
         background-color: #171717;
         border-radius: 6px;
       }
+      h1 img {
+        vertical-align: bottom;
+      }
+      #heading {    
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      #main {
+        display: flex;
+        flex: 1;
+      }
+
+      #leftCol,
+      #rightCol {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+      }
+
+      #leftCol p:first-child,
+      #rightCol p:first-child {
+        margin-top: 0%;
+      }
+
+      #leftCol h2,
+      #rightCol h2 {
+        margin-top: 0%;
+      }
     </style>
   </head>
   <body>
-    <h1>Crime Busters Online Web based Application Upgrade.</h1>
+    <div id="heading">
+    <h1><img src="images/siren-over.svg" width="50"> Crime Busters Online Web based Application Upgrade.</h1>
     <p><i>Created by David Gilson.</i></p>
-    <p>
-      This is an upgrade of code I developed to show maps of crimes reported to police. This was
-      used in local newspaper website.
-    </p>
-    <p>
-      Back in the day, we worked with Queensland Police Service to send reports, In another application, I imported report files, 
-      and created <code class="html">crimes_{dd-mm-yy}.xml</code> files based on dates of reports.
-    </p>
-    <p>
-      This application was used to show reported events as markers using Google Maps API.</p>
-     <p> 
-        <img title="Flag of Australia" src="examples/australia.svg">
-        <b>A first in Australia!</b></p>
-     <p>More details in GitHub: <a href="https://github.com/gilsonator/CrimeBusters/blob/main/README.md"
-      target="_blank" 
-      rel="noopener"
-      >README.md</a><br>
-      Clone to checkout:
-      <a href="https://github.com/gilsonator/CrimeBusters.git"
-      target="_blank" 
-      rel="noopener"
-      >https://github.com/gilsonator/CrimeBusters.git</a>
-     </p>
-    </p>
-    <h2>Notes</h2>
-    <p>I created this to outline my skills, ability to upgrade old code without original source:</p>
-    <ul>
-      <li><b>Important: the code is no longer in use, and the crime events are old and unconfirmed!</b></li>
-      <li>Complete rewrite of old code.</li>
-      <li>I un-obfuscated my original code downloaded from Wayback Machine.</li>
-      <li>Upgrading to latest version of Google Maps API.</li>
-      <li>Upgraded to use HTML5/ES6 Modules.</li>
-      <li>
-        Uses the <i>Haversine formula</i> to calculate the distance between two points on the Earth’s
-        surface, then sorts events based on distance from map center.<br />
-        <a href="https://en.wikipedia.org/wiki/Haversine_formula"
-        target="_blank"
+    </div>
+    <div id="main">
+      <div id="leftCol">
+      <p>
+        This is an upgrade of code I developed to show maps of crimes reported to police. This was
+        used in local newspaper website.
+      </p>
+      <p>
+        Back in the day, we worked with Queensland Police Service to send reports, In another application, I imported report files, 
+        and created <code class="html">crimes_{dd-mm-yy}.xml</code> files based on dates of reports.
+      </p>
+      <p>
+        This application was used to show reported events as markers using Google Maps API.</p>
+      <p> 
+          <img width="160" title="Flag of Australia" src="examples/australia.svg"><br>
+          <b>A first in Australia!</b></p>
+      <p>More details in GitHub: <a href="https://github.com/gilsonator/CrimeBusters/blob/main/README.md"
+        target="_blank" 
         rel="noopener"
+        >README.md</a><br>
+        Clone to checkout:
+        <a href="https://github.com/gilsonator/CrimeBusters.git"
+        target="_blank" 
+        rel="noopener"
+        >https://github.com/gilsonator/CrimeBusters.git</a>
+      </p>
+      </p>
+      <h2>Notes</h2>
+      <p>I created this to outline my skills, ability to upgrade old code without original source:</p>
+      <ul>
+        <li><b>Important: the code is no longer in use, and the crime events are old and unconfirmed!</b></li>
+        <li>Complete rewrite of old code.</li>
+        <li>I un-obfuscated my original code downloaded from Wayback Machine.</li>
+        <li>Upgrading to latest version of Google Maps API.</li>
+        <li>Upgraded to use HTML5/ES6 Modules.</li>
+        <li>
+          Uses the <i>Haversine formula</i> to calculate the distance between two points on the Earth’s
+          surface, then sorts events based on distance from map center.<br />
+          <a href="https://en.wikipedia.org/wiki/Haversine_formula"
+          target="_blank"
+          rel="noopener"
+          >
+          https://en.wikipedia.org/wiki/Haversine_formula
+          </a>
+        </li>
+        <li><b>No external JavaScript frameworks, such as Angular or React, were used.</b></li>
+      </ul>
+      <p>Here is reference to Wayback Machine Archive of Website, developed by me in 2012:<br>
+        <a
+          href="https://web.archive.org/web/20120224161647/http://www.townsvillebulletin.com.au/crimebusters/"
+          target="_blank" rel="noopener" title="https://web.archive.org/web/20120224161647/http://www.townsvillebulletin.com.au/crimebusters/"
+          >Crimebusters | Townsville Bulletin - Townsville, North QLD, Australia</a
         >
-        https://en.wikipedia.org/wiki/Haversine_formula
-        </a>
+      </p>
+    </div>
+    <div id="rightCol">
+      <h2>Demos</h2>
+      <ul>
+      <li>
+        Full updated version of Application previously used inside Website.<br>
+        <a href="crime-watch.html"
+        target="_blank"
+        >crime-watch.html<br>
+        <img width="460" title="Old Version" src="examples/website-iframe.png" ></a>
       </li>
-      <li><b>No external JavaScript frameworks, such as Angular or React, were used.</b></li>
-    </ul>
-    <p>Here is reference to Wayback Machine Archive of Website, developed by me in 2012:<br>
-      <a
-        href="https://web.archive.org/web/20120224161647/http://www.townsvillebulletin.com.au/crimebusters/"
-        target="_blank" rel="noopener" title="https://web.archive.org/web/20120224161647/http://www.townsvillebulletin.com.au/crimebusters/"
-        >Crimebusters | Townsville Bulletin - Townsville, North QLD, Australia</a
-      >
-    </p>
-    <h2>Demos</h2>
-    <ul>
-    <li>
-      Full updated version of Application previously used inside Website.<br>
-      <a href="crime-watch.html"
-      target="_blank"
-      >crime-watch.html<br>
-      <img width="460" title="Old Version" src="examples/website-iframe.png" ></a>
-    </li>
-    <li>
-      <span>
-        This is a mockup of the old website, using a screenshot as the background and an
-        <code class="html">&lt;iframe&gt;</code> overlaid to simulate the old site's appearance:</span
-      >
-    <br>
-      <a href="iframe-demo.html"
-      target="_blank"
-      >iframe-demo.html<br>
-      <img width="460" title="New Version" src="examples/bullywebsiteupgrade.png" ></a>
-            <img width="460" title="Old Version" src="examples/website.png" >
-    </li>
-    </ul>
+      <li>
+        <span>
+          This is a mockup of the old website, using a screenshot as the background and an
+          <code class="html">&lt;iframe&gt;</code> overlaid to simulate the old site's appearance:</span
+        >
+      <br>
+        <a href="iframe-demo.html"
+        target="_blank"
+        >iframe-demo.html<br>
+        <img width="460" title="New Version" src="examples/bullywebsiteupgrade.png" ></a>
+              <img width="460" title="Old Version" src="examples/website.png" >
+      </li>
+      </ul>
+    </div>
+    </div>
   </body>
 </html>
