@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,53 +7,98 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
 
-    <title>Crime Watch Map</title>
-    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <title>Crime Watch Map Old Website Demo</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
     />
-
     <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
-
-    <script type="module" src="./scripts/XMLParser.js" async></script>
-    <script type="module" src="./scripts/main.js" defer></script>
-
-    <script>
-      function showDates(event) {
-        console.debug(document.querySelector('#crimeList').classList);
-        document.querySelector('#crimeList').classList.toggle('collapsed');
-        //document.querySelector('#buttons').classList.toggle('collapsed');
-        //event.innerHTML = (event.innerHTML == arrowRight) ? arrowLeft : arrowRight;
-      }
-
-      function onDateClick(date) {}
-    </script>
     <style>
-      #rndBtn {
-        padding: 6px;
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        font-family: Arial, sans-serif;
       }
-
-      #rndBtn img {
-        width: 30px;
-        height: 30px;
+      p {
+        margin-block-end: -0.1em;
+      }
+      h2 {
+        margin-block-end: -0.1em;
+      }
+      code {
+        padding: 0.1em 0.2em;
+        margin: 0;
+        font-family: 'Courier New', Courier, monospace;
+        white-space: break-spaces;
+        color: rgb(112 170 255);
+        background-color: #242424;
+        border-radius: 6px;
       }
     </style>
   </head>
   <body>
-    <div id="buttons" class="noSelect">
-      <div class="symbol" onclick="showDates()" title="Show Events">☰</div>
-      <div id="rndBtn" class="symbol" onclick="showRndMarker()" title="Show a Random Marker">
-        <img title="Show a Random Marker" src="images/siren-over.svg" />
-      </div>
-      <div class="symbol" onclick="location.reload()" title="Reload"
-      style="padding-left: 6px; font-size: 20px">&#x1f504;</div>
-    </div>
-    <div id="crimeList" class="noSelect collapsed"></div>
-    <div id="map"></div>
-    <div id="loading">Loading...</div>
-    <!-- prettier-ignore -->
-    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-        ({key: "AIzaSyB02R4laQio9VntvjvSDk92KsT5PNH15b0", v: "weekly"});</script>
+    <h1>Crime Busters Online Web based Application Upgrade.</h1>
+    <p>
+      This is an upgrade of code I developed to show maps of crimes reported to police. This was
+      used in local news paper website.
+    </p>
+    <p>
+      <b>Note: the code is no longer in use, and the crime events are old and unconfirmed!</b>
+    </p>
+    <p>
+      Back in the day, we worked with Queensland Police to send daily reports, In another stand
+      alone application, I created `.xml` files based on dates of reports.
+    </p>
+    <p>
+      This application was used to show reported events as markers using Google Maps API.</p>
+     <p> 
+        <img title="Flag of Australia" src="examples/australia.svg">
+        <b>A first in Australia!</b></p>
+     <p>More details in <a href="README.md"
+      target="_blank" 
+      >README.md</a>
+     </p>
+    </p>
+    <h2>Notes</h2>
+    <p>I created this to outline my skills, ability to upgrade old code without original source:</p>
+    <ul>
+      <li>Complete rewrite of old code.</li>
+      <li>I un-obfuscated my original code downloaded from Wayback Machine.</li>
+      <li>Upgrading to latest version of Google Maps API.</li>
+      <li>Upgraded to use HTML5/ES6 Modules.</li>
+      <li>
+        Uses the Haversine formula to calculate the distance between two points on the Earth’s
+        surface, sorts events listed, based on distance from map center.<br />
+        https://en.wikipedia.org/wiki/Haversine_formula
+      </li>
+      <li><b>No external JavaScript frameworks such as Angular or React where used.</b></li>
+    </ul>
+    <p>Here is reference to Wayback Machine Archive of Website, using Code Written by myself in 2010:<br>
+      <a
+        href="https://web.archive.org/web/20120224161647/http://www.townsvillebulletin.com.au/crimebusters/"
+        target="_blank" rel="noopener"
+        >Crimebusters | Townsville Bulletin - Townsville, North QLD, Australia</a
+      >
+    </p>
+    <h2>Demos</h2>
+    <ul>
+        <li>
+            <a href="crime-watch.html"
+            target="_blank"
+            >crime-watch.html</a>
+            <span>- Full updated version of Application previously used inside Website.</span>
+      </li>
+      <li><a href="iframe-demo.html"
+        target="_blank" 
+        >iframe-demo.html</a>
+        -
+        <span>
+          This is a mockup of the old website, using a screenshot as the background and an
+          <code class="html">&lt;iframe&gt;</code> overlaid to simulate the old site's appearance:</span
+        >
+        
+      </li>
+    </ul>
   </body>
 </html>
