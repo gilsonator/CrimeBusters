@@ -299,7 +299,7 @@ async function addMarker(eventDetails) {
   let propertyTakenList = `
   <ul>
     ${eventDetails.propertyTaken
-      .split(';')
+      .split(/[;,]+/)
       .map(item => `<li><b>${item}</b></li>`)
       .join('')}
   </ul>
