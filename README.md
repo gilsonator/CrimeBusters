@@ -17,6 +17,7 @@ I created this to outline my skills, ability to upgrade old code without origina
 * Upgrading to latest version of Google Maps API.
 * Upgraded to use HTML5/ES6 Modules.
 * Uses the Haversine formula to calculate the distance between two points on the Earth’s surface, sorts events listed, based on distance from map center. https://en.wikipedia.org/wiki/Haversine_formula
+[Haversine Formula Copilot Conversation ](<The Haversine Formula.md>)
 
 **No external JavaScript frameworks such as Angular or React where used.**
 
