@@ -100,7 +100,7 @@ export async function load() {
       console.log('Parsed Events:', events);
 
       // DEBUG temp
-      document.getElementById('heading_0').innerText = 'Events (' + (events.length + 1) + ')';
+      document.getElementById('heading_0').innerText = 'Events (' + (events.length) + ')';
 
       // sort by distance from map default center.
       events.sort((a, b) => {
