@@ -86,6 +86,9 @@ export async function load() {
         'marker'
       );
       console.log('Parsed Events:', events);
+      
+      // DEBUG temp
+      document.getElementById('heading_0').innerText = "Events ("+ (events.length + 1) + ")";
 
       // sort by distance from map default center.
       events.sort((a, b) => {
@@ -161,7 +164,7 @@ async function initDatesList(dates) {
     }); // click show highlight
     const dateHeaderHTML = `
       <div class='crimeListDateHeading' id='heading_${index}'>
-        ${dateString}
+        
       </div>
       <div class='crimeListDIV' id='crimes_${index}'></div>
       `;
