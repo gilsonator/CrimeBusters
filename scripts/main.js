@@ -67,6 +67,18 @@ function haversineDistanceKm(lat1, lng1, lat2, lng2) {
   return R * c; // Distance in kilometers
 }
 
+function handleEvent(event) {
+  // loadMarkers(index);
+  console.log('Address clicked:', event.target.innerHTML);
+  showMarker(event.target.dataset.id);
+  event.target.classList.toggle('selected');
+  if (lastEventHighlighted) {
+    lastEventHighlighted.target.classList.toggle('selected');
+  }
+  lastEventHighlighted = event;
+  return false;
+}
+
 export async function load() {
   map = await initMap();
 
@@ -86,9 +98,9 @@ export async function load() {
         'marker'
       );
       console.log('Parsed Events:', events);
-      
+
       // DEBUG temp
-      document.getElementById('heading_0').innerText = "Events ("+ (events.length + 1) + ")";
+      document.getElementById('heading_0').innerText = 'Events (' + (events.length + 1) + ')';
 
       // sort by distance from map default center.
       events.sort((a, b) => {
@@ -130,17 +142,22 @@ export async function load() {
         tempDiv.className = 'listItem';
         tempDiv.setAttribute('data-id', eventCount);
         tempDiv.setAttribute('data-distance', event.distance);
+        // Handle click event
         tempDiv.addEventListener('click', event => {
-          // loadMarkers(index);
-          console.log('Address clicked:', event.target.innerHTML);
-          showMarker(event.target.dataset.id);
-          event.target.classList.toggle('selected');
-          if (lastEventHighlighted) {
-            lastEventHighlighted.target.classList.toggle('selected');
-          }
-          lastEventHighlighted = event;
-          return false;
+          handleEvent(event);
         });
+
+        // Handle keydown event for Enter key
+        tempDiv.addEventListener('keydown', event => {
+          if (event.key === 'Enter') {
+            handleEvent(event);
+          }
+        });
+
+        // Handle touchend event for tapping on touch devices
+        // tempDiv.addEventListener('touchend', event => {
+        //  handleEvent(event);
+        //});
         document.getElementById('crimes_' + selectedDateID).appendChild(tempDiv);
         //}
         eventCount++;
@@ -220,7 +237,7 @@ async function initMap(date) {
   }
   map.addListener('zoom_changed', checkZoomLevel);
 
-  // Only show button if secure, or it will fail. 
+  // Only show button if secure, or it will fail.
   // NOTE: 0 && is for debug
   if (0 && window.isSecureContext && navigator.geolocation) {
     let userLocation;
