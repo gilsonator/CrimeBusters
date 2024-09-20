@@ -317,7 +317,7 @@ async function addMarker(eventDetails) {
   <ul>
     ${eventDetails.propertyTaken
       .split(/[;,]+/)
-      .map(item => `<li><b>${item}</b></li>`)
+      .map(item => `<li><b>${formatString(item)}</b></li>`)
       .join('')}
   </ul>
 `;
@@ -340,7 +340,7 @@ async function addMarker(eventDetails) {
   infoWindow.setHeaderContent(formatString(eventDetails.address));
 
   // Add a click event listener to the marker
-  marker.addListener('click', () => {
+  marker.addListener('click', (event) => {
     if (lastOpenedInfoWindow) {
       lastOpenedInfoWindow.close();
     }
@@ -358,6 +358,11 @@ async function addMarker(eventDetails) {
     currentCircle.setCenter(position);
     // map.panTo(position);
     currentMarkerSelected = marker;
+
+    //event.target.classList.toggle('selected');
+    // if (lastEventHighlighted) {
+    //  lastEventHighlighted.target.classList.toggle('selected');
+   // }
   });
 
   infoWindow.addListener('closeclick', () => {
