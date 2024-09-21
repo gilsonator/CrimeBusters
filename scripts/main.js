@@ -100,21 +100,31 @@ export async function load() {
       console.log('Parsed Events:', events);
 
       // DEBUG temp
-      document.getElementById('heading_0').innerText = 'Events (' + (events.length) + ')';
+      document.getElementById('heading_0').innerText = 'Events (' + events.length + ')';
 
       // sort by distance from map default center.
+      // saving pasrsedFloat lat/lng strings in position object
       events.sort((a, b) => {
+        a.position = {
+          lat: (parseFloat(a.lat) || 0) + 0.002453,
+          lng: (parseFloat(a.lng) || 0) + 0.0019799,
+        };
+        b.position = {
+          lat: (parseFloat(b.lat) || 0) + 0.002453,
+          lng: (parseFloat(b.lng) || 0) + 0.0019799,
+        };
+
         const distanceA = haversineDistanceKm(
           centerPosition.lat,
           centerPosition.lng,
-          parseFloat(a.lat) || 0,
-          parseFloat(a.lng) || 0
+          a.position.lat,
+          a.position.lng
         );
         const distanceB = haversineDistanceKm(
           centerPosition.lat,
           centerPosition.lng,
-          parseFloat(b.lat) || 0,
-          parseFloat(b.lng) || 0
+          b.position.lat,
+          b.position.lng
         );
 
         // Save the distances in the event objects
@@ -131,14 +141,27 @@ export async function load() {
       selectedDateID = 0;
       let eventCount = 0;
 
-      events.forEach(event => {
-        addMarker(event); // Adding the first markers on first date
+      // Build event list
+      for (const event of events) {
+        // Build array for formatted strings of items,and add to event object for further reference.
+        // TODO: Check for 'Nil stolen', 'Nothing' and modify to exclude from array, and when building popup excludes list
+        event.propertyTakenFmt = [];
+        let propertiesTaken = event.propertyTaken.split(/[;,]+/);
+        for (const item of propertiesTaken) {
+          if (!item.match(/^(Nil stolen|Nothing)$/)) {
+            event.propertyTakenFmt.push(formatString(item));
+          }
+        }
+
+        event.address = formatString(event.address);
+
+        await addMarker(event); // Adding the first markers on first date
 
         // TEMP DG::: function addToList(event, location, propertyTaken) {
         const tempDiv = document.createElement('div');
         tempDiv.setAttribute('tabindex', eventCount);
-        tempDiv.title = 'Show the location.';
-        tempDiv.innerHTML = formatString(event.address);
+        tempDiv.title = event.propertyTakenFmt.length + ' item(s) taken';
+        tempDiv.innerHTML = event.address;
         tempDiv.className = 'listItem';
         tempDiv.setAttribute('data-id', eventCount);
         tempDiv.setAttribute('data-distance', event.distance);
@@ -161,7 +184,7 @@ export async function load() {
         document.getElementById('crimes_' + selectedDateID).appendChild(tempDiv);
         //}
         eventCount++;
-      });
+      }
     } else {
       console.error('No event dates found.');
     }
@@ -289,11 +312,6 @@ async function addMarker(eventDetails) {
   const defaultIcon = 'images/siren.svg';
   // const hoverIcon = 'images/siren-over.svg';
 
-  // DG NOTE: The lat/lng in xml files are off, slighly adjusted based on difference to Google Maps
-  const position = {
-    lat: (parseFloat(eventDetails.lat) || 0) + 0.002453,
-    lng: (parseFloat(eventDetails.lng) || 0) + 0.0019799,
-  };
   const icon = document.createElement('img');
   icon.width = 24;
   icon.height = 24;
@@ -308,26 +326,28 @@ async function addMarker(eventDetails) {
 
   const marker = await new AdvancedMarkerElement({
     map: map,
-    position: position,
+    position: eventDetails.position,
     content: faPin.element,
     title: eventDetails.address,
   });
 
-  let propertyTakenList = `
+  let propertyTakenList;
+  if (eventDetails.propertyTakenFmt.length > 0) {
+    propertyTakenList = `${eventDetails.propertyTakenFmt.length} Item(s) taken:
   <ul>
-    ${eventDetails.propertyTaken
-      .split(/[;,]+/)
-      .map(item => `<li><b>${formatString(item)}</b></li>`)
-      .join('')}
+    ${eventDetails.propertyTakenFmt.map(item => `<li><b>${item}</b></li>`).join('')}
   </ul>
-`;
+`; 
+  } else {
+    propertyTakenList = " <ul><li><b>No items were taken.</b></li></ul>"
+  }
 
   const markerDiv = `
   <div class='marker' data-id='${currentMarkers.length}'>
     <p>An alleged <b>${eventDetails.type}</b> event occurred at a <b>${eventDetails.location}</b>.</p>
-    <p>The perpetrators gained entry by <b>${eventDetails.entry}</b> and stole: ${propertyTakenList}</p>
+    <p>The perpetrators gained entry by <b>${eventDetails.entry}.</b> ${propertyTakenList}</p>
     <p>Date Reported: <b>${eventDates[selectedDateID].dateString}</b></p>
-    <a target="_blank" z-index="-1" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(eventDetails.address + ',QLD,Australia')}" tabindex="0">
+    <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURI(eventDetails.address + ',QLD,Australia')}" tabindex="0">
       <span>View on Google Maps</span>
     </a>
     <p class="marker-note"><b>NOTE:</b> The crime markers do not represent specific addresses, they simply point to the area around where acussed crime occured.</p>
@@ -337,10 +357,10 @@ async function addMarker(eventDetails) {
     content: markerDiv,
   });
 
-  infoWindow.setHeaderContent(formatString(eventDetails.address));
+  infoWindow.setHeaderContent(eventDetails.address);
 
   // Add a click event listener to the marker
-  marker.addListener('click', (event) => {
+  marker.addListener('click', event => {
     if (lastOpenedInfoWindow) {
       lastOpenedInfoWindow.close();
     }
@@ -355,14 +375,14 @@ async function addMarker(eventDetails) {
       currentCircle.setMap(map);
     }
 
-    currentCircle.setCenter(position);
+    currentCircle.setCenter(marker.position);
     // map.panTo(position);
     currentMarkerSelected = marker;
 
     //event.target.classList.toggle('selected');
     // if (lastEventHighlighted) {
     //  lastEventHighlighted.target.classList.toggle('selected');
-   // }
+    // }
   });
 
   infoWindow.addListener('closeclick', () => {
