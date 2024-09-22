@@ -135,12 +135,13 @@ export async function load() {
         return distanceA - distanceB;
       });
 
-      console.log('Sorted by distance:', events);
+      // console.log('Sorted by distance:', events);
 
       // TODO: Make sure to save loaded ents for dates, only load if not done already
       selectedDateID = 0;
       let eventCount = 0;
 
+      const distances = [];
       // Build event list
       for (const event of events) {
         // Build array for formatted strings of items,and add to event object for further reference.
@@ -154,6 +155,7 @@ export async function load() {
         }
 
         event.address = formatString(event.address);
+        distances.push(event.distance);
 
         await addMarker(event); // Adding the first markers on first date
 
@@ -185,6 +187,8 @@ export async function load() {
         //}
         eventCount++;
       }
+
+      console.log("Distances:", distances);
     } else {
       console.error('No event dates found.');
     }
