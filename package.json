@@ -23,5 +23,8 @@
   "devDependencies": {
     "http-server": "^14.1.1",
     "prettier": "3.3.3"
+  },
+  "dependencies": {
+    "@googlemaps/markerclusterer": "^2.5.3"
   }
 }
