@@ -13,10 +13,6 @@ NOTES:
 // This data records property crime reported over periods beginning 12.01pm Monday, Wednesday or Friday until 12 noon on the listed date.
 import { XMLParser } from './XMLParser.js';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
-// const { MarkerClusterer } = require('@googlemaps/markerclusterer');
-// import pkg from '@googlemaps/markerclusterer';
-// const { MarkerClusterer } = pkg;
-
 
 let map;
 let eventDates;
