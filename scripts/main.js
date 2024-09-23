@@ -12,7 +12,7 @@ NOTES:
 // The crime markers do not represent specific addresses, they are designed to point to the streets where property crime has occurred.
 // This data records property crime reported over periods beginning 12.01pm Monday, Wednesday or Friday until 12 noon on the listed date.
 import { XMLParser } from './XMLParser.js';
-import { MarkerClusterer } from '@googlemaps/markerclusterer';
+// import { MarkerClusterer } from '@googlemaps/markerclusterer';
 
 let map;
 let eventDates;
@@ -307,7 +307,7 @@ async function initMap(date) {
   }
 
   loadingIndicator.style.display = 'none';
-  new MarkerClusterer({ markers, map });
+  // new MarkerClusterer({ markers, map });
   return map;
 }
 
