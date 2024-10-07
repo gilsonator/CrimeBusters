@@ -101,7 +101,7 @@ export async function load() {
       console.log('Parsed Events:', events);
 
       // DEBUG temp
-      document.getElementById('heading_0').innerText = 'Events (' + events.length + ')';
+      document.getElementById('heading_0').innerText = 'Offences (' + events.length + ')';
 
       // sort by distance from map default center.
       // saving pasrsedFloat lat/lng strings in position object
@@ -242,6 +242,8 @@ async function initMap(date) {
     zoom: 12,
     center: centerPosition,
     mapId: 'DG202409CSMAP',
+    minZoom: 7,
+    maxZoom: 14,
   });
 
   currentCircle = new google.maps.Circle({
