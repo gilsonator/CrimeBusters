@@ -1,3 +1,4 @@
 site.webmanifest
 node_modules/
 images/\[Originals]/
+.env
