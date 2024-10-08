@@ -244,6 +244,7 @@ async function initMap(date) {
     mapId: 'DG202409CSMAP',
     minZoom: 7,
     maxZoom: 14,
+    clickableIcons: false,
   });
 
   currentCircle = new google.maps.Circle({
