@@ -1,132 +1,146 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="png" href="icons/favicon.png">
-    <link rel="icon" type="png" href="icons/android-chrome-192x192.png">
-    <link rel="icon" type="png" href="icons/android-chrome-512x512.png">
-    <link rel="icon" type="png" href="icons/apple-touch-icon.png">
-    <link rel="icon" type="png" href="icons/favicon-16x16.png">
-    <link rel="icon" type="png" href="icons/favicon-32x32.png">
 
-    <title>Crime Busters Web Upgrade Demo</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
-    <style>
-      body {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
-      }
-      p {
-        margin-block-end: -0.1em;
-      }
-      h1 {
-        margin: 0;
-      }
-      h2 {
-        margin-block-end: -0.1em;
-      }
-      code {
-        padding: 0.1em 0.2em;
-        margin: 0;
-        font-family: 'Courier New', Courier, monospace;
-        white-space: break-spaces;
-        color: #05f13c;
-        background-color: #171717;
-        border-radius: 6px;
-      }
-      h1 img {
-        vertical-align: bottom;
-      }
-      #heading {    
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="png" href="icons/favicon.png">
+  <link rel="icon" type="png" href="icons/android-chrome-192x192.png">
+  <link rel="icon" type="png" href="icons/android-chrome-512x512.png">
+  <link rel="icon" type="png" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="png" href="icons/favicon-16x16.png">
+  <link rel="icon" type="png" href="icons/favicon-32x32.png">
+
+  <title>Crime Busters Web Upgrade Demo</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet" />
+  <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    p {
+      margin-block-end: -0.1em;
+    }
+
+    h1 {
+      margin: 0;
+      /* height: 50px; */
+    }
+
+    h2 {
+      margin-block-end: -0.1em;
+    }
+
+    ul {
+      padding-inline-start: 20px;
+    }
+
+    code {
+      padding: 0.1em 0.2em;
+      margin: 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: break-spaces;
+      color: #05f13c;
+      background-color: #171717;
+      border-radius: 6px;
+    }
+
+    h1 img {
+      vertical-align: bottom;
+    }
+
+    #heading {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-block-end: 20px;
+      width: 100%;
+    }
+
+    #main {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    #rightCol {
+      padding-left: 20px;
+    }
+
+    #leftCol,
+    #rightCol {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #leftCol p:first-child,
+    #rightCol p:first-child {
+      margin-top: 0%;
+    }
+
+    #leftCol h2,
+    #rightCol h2 {
+      /* margin-top: 0%; */
+    }
+
+    #leftCol h3:first-child,
+    #rightCol h3:first-child {
+      margin-top: 0%;
+    }
+
+    .footer {
+      display: flex;
+      color: #9D9D9D;
+      width: 100%;
+    }
+
+    @media (min-width: 980px) {
       #main {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
+        flex-direction: row;
       }
+    }
+  </style>
+</head>
 
-      #leftCol,
-      #rightCol {
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-      }
-
-      #leftCol p:first-child,
-      #rightCol p:first-child {
-        margin-top: 0%;
-      }
-
-      #leftCol h2,
-      #rightCol h2 {
-        margin-top: 0%;
-      }
-
-      .footer {
-        display: flex;
-        color: #9D9D9D;
-      }
-
-      @media (min-width: 980px) {
-        #main {
-          flex-direction: row;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="heading">
-    <h1><img title="Siren" src="images/siren-over.svg" width="50"> Crime Busters Web Upgrade</h1>
+<body>
+  <div id="heading">
+    <h1>Crime Busters Web Upgrade</h1>
     <p><i>Created by David Gilson.</i></p>
-    </div>
-    <div id="main">
-      <div id="leftCol">
+  </div>
+  <div id="main">
+    <div id="leftCol">
       <p>
         This is an upgrade of code I developed to show maps of crimes reported to police. This was
         used in local newspaper website.
       </p>
       <p>
-        Back in the day, we worked with Queensland Police Service to send reports, In another application, I imported report files, 
+        Back in the day, we worked with Queensland Police Service to send reports, In another application, I imported
+        report files,
         and created <code class="html">crimes_{dd-mm-yy}.xml</code> files based on dates of reports.
       </p>
       <p>
         This application was used to show reported events as markers using Google Maps API.</p>
-      <p> 
-          <img width="160" title="Flag of Australia" src="examples/australia.svg"><br>
-          <b>A first in Australia!</b></p>
-      <p>More details in GitHub: <a href="https://github.com/gilsonator/CrimeBusters/blob/main/README.md"
-        target="_blank" 
-        rel="noopener"
-        >README.md</a><br>
-        Clone to checkout:
-        <a href="https://github.com/gilsonator/CrimeBusters.git"
-        target="_blank" 
-        rel="noopener"
-        >https://github.com/gilsonator/CrimeBusters.git</a>
-      </p>
+      <p>
+        <img width="160" title="Flag of Australia" src="examples/australia.svg"><br>
+        <b>A first in Australia!</b>
       </p>
       <h2>Today</h2>
-      <p>Currently QPS have an application, which is similar to the one I develop while working for <i>Townsville Bulletin</i>, in 2012:<br>
-      <a href="https://www.police.qld.gov.au/maps-and-statistics#:~:text=Current%20reports%20are%20available%20from%20the%20Queensland%20Government's%20Statistician's%20Office."
-      target="_blank"
-      rel="noopener">Maps and statistics | QPS</a>
-    </p>
-    <br>
+      <p>Currently QPS have an application, which is similar to the one I develop while working for <i>Townsville
+          Bulletin</i>, in 2012:<br>
+        <a href="https://www.police.qld.gov.au/maps-and-statistics#:~:text=Current%20reports%20are%20available%20from%20the%20Queensland%20Government's%20Statistician's%20Office."
+          target="_blank" rel="noopener">Maps and statistics | QPS</a>
+      </p>
       <h2>Notes</h2>
       <p>I created this to outline my skills, ability to upgrade old code without original source:</p>
       <ul>
@@ -138,58 +152,52 @@
         <li>
           Uses the <i>Haversine formula</i> to calculate the distance between two points on the Earth's
           surface, then sorts events based on distance from map center.<br />
-          <a href="https://en.wikipedia.org/wiki/Haversine_formula"
-          target="_blank"
-          rel="noopener"
-          >
-          https://en.wikipedia.org/wiki/Haversine_formula
+          <a href="https://en.wikipedia.org/wiki/Haversine_formula" target="_blank" rel="noopener">
+            https://en.wikipedia.org/wiki/Haversine_formula
           </a>
         </li>
         <li><b>No external JavaScript frameworks, such as Angular or React, were used.</b></li>
       </ul>
       <p>Here is reference to Wayback Machine Archive of Website, developed by me in 2012:<br>
-        <a
-          href="https://web.archive.org/web/20120101000000*/http://www.townsvillebulletin.com.au/crimebusters/
-          target="_blank" rel="noopener" title="https://web.archive.org/web/20120101000000*/http://www.townsvillebulletin.com.au/crimebusters/"
-          >Crimebusters | Townsville Bulletin - Townsville, North QLD, Australia</a
-        >
+        <a href="https://web.archive.org/web/20120101000000*/http://www.townsvillebulletin.com.au/crimebusters/
+          target=" _blank" rel="noopener"
+          title="https://web.archive.org/web/20120101000000*/http://www.townsvillebulletin.com.au/crimebusters/">Crimebusters
+          | Townsville Bulletin - Townsville, North QLD, Australia</a>
       </p>
     </div>
     <div id="rightCol">
-      <h2>Demos</h2>
+      <h3>Links</h3>
+      <div id="links">
+        <img src="images/github.svg" alt="" />
+        <a target="_blank" rel="noopener" href="https://github.com/gilsonator/CrimeBusters">github/gilsonator/CrimeBusters</a>
+      </div>
+      <h3>Demos</h3>
       <ul>
-      <li>
-        Full updated version of Application previously used inside Website.<br>
-        <a href="crime-watch.html"
-        target="_blank"
-        >crime-watch.html<br>
-        <img width="460" title="Old Version" src="examples/website-iframe.png" ></a>
-      </li>
-      <li>
-        <span>
-          Mockup of the old website, using a screenshot as the background and an
-          <code class="html">&lt;iframe&gt;</code> overlaid to simulate the old site's appearance:</span
-        >
-      <br><br>
-      <div>Sample:
-        <a href="iframe-demo.html"
-        target="_blank"
-        >iframe-demo.html<br>
-        <img width="460" title="New Version" src="examples/bullywebsiteupgrade.png" ></a>
-        </div>
-        <br>
-        <div>Wayback Machine screenshot:<br>
-          <a
-          href="examples/website.png"
-          target="_blank" rel="noopener" title="Wayback Screenshot"
-          >
-              <img width="460" title="Old Version" src="examples/website.png" >
-          </a>
-        </div>
-      </li>
+        <li>
+          Full updated version of Application previously used inside Website.<br>
+          <a href="crime-watch.html" target="_blank">crime-watch.html<br>
+            <img width="460" title="Old Version" src="examples/website-iframe.png"></a>
+        </li>
+        <li>
+          <span>
+            Mockup of the old website, using a screenshot as the background and an
+            <code class="html">&lt;iframe&gt;</code> overlaid to simulate the old site's appearance:</span>
+          <br><br>
+          <div>Sample:
+            <a href="iframe-demo.html" target="_blank">iframe-demo.html<br>
+              <img width="460" title="New Version" src="examples/bullywebsiteupgrade.png"></a>
+          </div>
+          <br>
+          <div>Wayback Machine screenshot:<br>
+            <a href="examples/website.png" target="_blank" rel="noopener" title="Wayback Screenshot">
+              <img width="460" title="Old Version" src="examples/website.png">
+            </a>
+          </div>
+        </li>
       </ul>
     </div>
-    </div>
-    <div class="footer">&copy; 2024 David Gilson. All rights reserved.</div>
-  </body>
+  </div>
+  <div class="footer">&copy; 2024 David Gilson. All rights reserved.</div>
+</body>
+
 </html>
