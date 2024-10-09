@@ -44,6 +44,12 @@
 
     ul {
       padding-inline-start: 20px;
+      /* margin-top: 0px; */
+    }
+
+    #rightCol ul {
+      padding-inline-start: 0px;
+      margin-top: 0px;
     }
 
     code {
@@ -51,8 +57,10 @@
       margin: 0;
       font-family: 'Courier New', Courier, monospace;
       white-space: break-spaces;
-      color: #05f13c;
-      background-color: #171717;
+      /*color: #62ACEA;
+      background-color: #242529;*/
+      color: #FFF;
+      background-color: #000066;
       border-radius: 6px;
     }
 
@@ -64,7 +72,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding-block-end: 20px;
+      /* padding-block-end: 10px; */
       width: 100%;
     }
 
@@ -74,24 +82,15 @@
       flex-direction: column;
     }
 
-    #rightCol {
-      padding-left: 20px;
+    #leftCol {
+      padding-right: 20px;
+      padding-bottom: 20px;
     }
 
     #leftCol,
     #rightCol {
       display: flex;
       flex-direction: column;
-    }
-
-    #leftCol p:first-child,
-    #rightCol p:first-child {
-      margin-top: 0%;
-    }
-
-    #leftCol h2,
-    #rightCol h2 {
-      /* margin-top: 0%; */
     }
 
     #leftCol h3:first-child,
@@ -110,6 +109,24 @@
         flex-direction: row;
       }
     }
+
+    ::selection {
+      color: white; /* Text color */
+      background: rgb(74, 74, 74); /* Background color */
+    }
+
+    #rightCol li img {
+      width: 96%;
+    }
+
+    #links img {
+      width: auto;
+    }
+
+    #rightCol p {
+      margin-top: 0;
+    }
+
   </style>
 </head>
 
@@ -172,11 +189,12 @@
         <a target="_blank" rel="noopener" href="https://github.com/gilsonator/CrimeBusters">github/gilsonator/CrimeBusters</a>
       </div>
       <h3>Demos</h3>
+      <p>I created these to show my skills, without having to checkout git repository</p>
       <ul>
         <li>
           Full updated version of Application previously used inside Website.<br>
           <a href="crime-watch.html" target="_blank">crime-watch.html<br>
-            <img width="460" title="Old Version" src="examples/website-iframe.png"></a>
+            <img width="260" title="Old Version" src="examples/website-iframe.png"></a>
         </li>
         <li>
           <span>
@@ -185,12 +203,12 @@
           <br><br>
           <div>Sample:
             <a href="iframe-demo.html" target="_blank">iframe-demo.html<br>
-              <img width="460" title="New Version" src="examples/bullywebsiteupgrade.png"></a>
+              <img width="260" title="New Version" src="examples/bullywebsiteupgrade.png"></a>
           </div>
           <br>
           <div>Wayback Machine screenshot:<br>
             <a href="examples/website.png" target="_blank" rel="noopener" title="Wayback Screenshot">
-              <img width="460" title="Old Version" src="examples/website.png">
+              <img width="260" title="Old Version" src="examples/website.png">
             </a>
           </div>
         </li>
