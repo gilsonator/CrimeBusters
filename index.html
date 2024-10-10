@@ -35,7 +35,7 @@
 
     h1 {
       margin: 0;
-      font-size: 7vw;
+      font-size: clamp(7vw, 3vw, 1em);
     }
 
     h2 {
@@ -91,6 +91,7 @@
     #rightCol {
       display: flex;
       flex-direction: column;
+      flex-grow: 1;
     }
 
     #leftCol h3:first-child,
@@ -120,9 +121,9 @@
     }
 
     #rightCol ul {
-        list-style-type: none; /* Remove bullets */
-        padding: 0; /* Remove padding */
-        margin: 0; /* Remove margins */
+      list-style-type: none; /* Remove bullets */
+      padding: 0; /* Remove padding */
+      margin: 0; /* Remove margins */
     }
 
     #rightCol li img {
@@ -136,6 +137,7 @@
     #rightCol p {
       margin-top: 0;
     }
+
 
   </style>
 </head>
