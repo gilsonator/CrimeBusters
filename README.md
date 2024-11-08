@@ -109,3 +109,68 @@ Then run:
 ```PowerShell
 npm start
 ```
+
+## Explanation
+Thanks to Copilot for summarising changes
+
+### HTML5
+
+HTML5 is the latest version of Hypertext Markup Language, the code that describes web pages. It introduces new elements and attributes that reflect modern web usage:
+
+1. **New Elements**: Including `header`, `footer`, `article`, `section`, `aside`, and `nav`, providing better document structure.
+2. **Multimedia Support**: Native support for audio and video embedding with the `audio` and `video` tags.
+3. **Graphics and Effects**: Integration of the `canvas` element for 2D drawing, and support for scalable vector graphics (SVG).
+4. **APIs**: Provides robust APIs for advanced functionality like offline storage, local storage, and Geolocation.
+5. **Form Enhancements**: New input types, attributes, and form elements to improve form handling and validation.
+
+### ES6
+
+ES6, or ECMAScript 2015, is a significant update to the JavaScript language that introduces many new features and improvements:
+
+1. **Arrow Functions**: Shorter syntax for writing functions:
+   ```javascript
+   const add = (a, b) => a + b;
+   ```
+
+2. **Classes**: A more intuitive syntax for OOP in JavaScript:
+   ```javascript
+   class Person {
+       constructor(name) {
+           this.name = name;
+       }
+
+       greet() {
+           console.log(`Hello, my name is ${this.name}`);
+       }
+   }
+   ```
+
+3. **Modules**: Native support for modular code:
+   ```javascript
+   // Exporting a module
+   export const name = 'Alice';
+
+   // Importing a module
+   import { name } from './module';
+   ```
+
+4. **Template Literals**: Enhanced string manipulation:
+   ```javascript
+   const name = 'Alice';
+   console.log(`Hello, ${name}!`);
+   ```
+
+5. **Destructuring**: Extracting data from arrays and objects more easily:
+   ```javascript
+   const [a, b] = [1, 2];
+   const {name, age} = {name: 'Alice', age: 25};
+   ```
+
+6. **Promises**: For better handling of asynchronous operations:
+   ```javascript
+   const promise = new Promise((resolve, reject) => {
+       // Asynchronous operation
+   });
+   ```
+
+Both HTML5 and ES6 represent significant advancements in their respective areas, enhancing the capabilities and ease of development.
