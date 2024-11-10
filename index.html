@@ -101,11 +101,12 @@
       flex-grow: 1;
     }
 
+    /*
     #leftCol h3:first-child,
     #rightCol h3:first-child {
       margin-top: 0%;
     }
-
+    */
     .footer {
       display: flex;
       color: #9D9D9D;
@@ -115,6 +116,15 @@
     @media (min-width: 980px) {
       #main {
         flex-direction: row;
+      }
+
+      #rightCol h3:first-child {
+        margin-top: 0;
+      }
+
+      #rightCol {
+        padding-left: 20px;
+        border-left-style: dotted;
       }
 
       h1 {
